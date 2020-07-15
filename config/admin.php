@@ -276,7 +276,7 @@ return [
     |    "skin-red", "skin-red-light", "skin-black", "skin-black-light".
     |
     */
-    'skin' => 'skin-blue-light',
+    'skin' => 'skin-purple-light',
 
     /*
     |--------------------------------------------------------------------------
@@ -290,7 +290,8 @@ return [
     | "sidebar-mini".
     |
     */
-    'layout' => ['sidebar-mini', 'sidebar-collapse'],
+//    'layout' => ['sidebar-mini', 'sidebar-collapse'],
+    'layout' => ['sidebar-mini'],
 
     /*
     |--------------------------------------------------------------------------
@@ -374,8 +375,12 @@ return [
     | The global Grid action display class.
     |--------------------------------------------------------------------------
     */
-    'grid_action_class' => \Encore\Admin\Grid\Displayers\DropdownActions::class,
-
+//    使用`下拉菜单`形式
+//    'grid_action_class' => \Encore\Admin\Grid\Displayers\DropdownActions::class,
+    // 最原始的`按钮图标`形式
+    'grid_action_class' => \Encore\Admin\Grid\Displayers\Actions::class,
+    // 使用`右键菜单`形式
+//    'grid_action_class' => \Encore\Admin\Grid\Displayers\ContextMenuActions::class,
     /*
     |--------------------------------------------------------------------------
     | Extension Directory
