@@ -29,7 +29,7 @@ class UserController extends AdminController
 
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
-        $grid->column('name', trans('admin.name'));
+        $grid->column('name', trans('员工姓名'));
         $grid->column('roles', trans('admin.roles'))->pluck('name')->label();
         $grid->column('created_at', trans('admin.created_at'));
         $grid->column('updated_at', trans('admin.updated_at'));
@@ -64,16 +64,26 @@ class UserController extends AdminController
 
         $show->field('id', 'ID');
         $show->field('username', trans('admin.username'));
-        $show->field('name', trans('admin.name'));
+        $show->field('name', trans('真实姓名'));
+        $show->field('phone', trans('手机号'));
+        $show->field('birthday', __('生日'));
+        $show->field('sex', trans('性别'))->using([0 => '男', 1 => '女']);
+        $show->field('entry_time', __('入职时间'));
+        $show->field('is_job', __('在职状态'))->using([0 => '在职', 1 => '离职']);
         $show->field('roles', trans('admin.roles'))->as(function ($roles) {
             return $roles->pluck('name');
         })->label();
         $show->field('permissions', trans('admin.permissions'))->as(function ($permission) {
             return $permission->pluck('name');
         })->label();
-        $show->field('created_at', trans('admin.created_at'));
-        $show->field('updated_at', trans('admin.updated_at'));
-
+        $show->field('quit_time', __('离职时间'));
+        $show->field('avatar', trans('admin.avatar'))->image();
+        $show->field('signed', trans('上传签名'))->image();
+        $show->panel()
+            ->tools(function ($tools) {
+                $tools->disableEdit();
+                $tools->disableDelete();
+            });;
         return $show;
     }
 
@@ -94,12 +104,12 @@ class UserController extends AdminController
         $connection = config('admin.database.connection');
 
         $form->display('id', 'ID');
+        $form->text('name', trans('真实姓名'))->rules('required');
+        $form->text('phone', trans('手机号'))->rules('required');
         $form->text('username', trans('admin.username'))
             ->creationRules(['required', "unique:{$connection}.{$userTable}"])
             ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"]);
 
-        $form->text('name', trans('admin.name'))->rules('required');
-        $form->image('avatar', trans('admin.avatar'));
         $form->password('password', trans('admin.password'))->rules('required|confirmed');
         $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
             ->default(function ($form) {
@@ -107,12 +117,17 @@ class UserController extends AdminController
             });
 
         $form->ignore(['password_confirmation']);
+        $form->datetime('entry_time', __('入职时间'))->format('YYYY年MM月DD日')->required();
 
         $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
         $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
+        $form->radio('sex', trans('性别'))->options([0 => '男', 1 => '女']);
 
-        $form->display('created_at', trans('admin.created_at'));
-        $form->display('updated_at', trans('admin.updated_at'));
+        $form->image('avatar', trans('admin.avatar'));
+        $form->image('signed', trans('上传签名'));
+        $form->datetime('birthday', __('生日'))->format('YYYY年MM月DD日');
+        $form->radio('is_job', __('在职状态'))->options([0 => '在职', 1 => '离职']);
+        $form->datetime('quit_time', __('离职时间'))->format('YYYY年MM月DD日');
 
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {

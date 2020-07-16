@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
+    <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="new laravel-admin work">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2016_01_04_173148_create_admin_tables.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2016_01_04_173148_create_admin_tables.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/form/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/form/footer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/show/panel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/show/panel.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Controllers/UserController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +140,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../student" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
@@ -165,7 +165,8 @@
       <workItem from="1594600969069" duration="5210000" />
       <workItem from="1594694096035" duration="2588000" />
       <workItem from="1594718966179" duration="351000" />
-      <workItem from="1594775157836" duration="12809000" />
+      <workItem from="1594775157836" duration="18166000" />
+      <workItem from="1594859732818" duration="20999000" />
     </task>
     <task id="LOCAL-00001" summary="new laravel-admin work">
       <created>1594521026638</created>
@@ -174,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594521026638</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="new laravel-admin work">
+      <created>1594799485540</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1594799485540</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,13 +193,15 @@
     <option name="LAST_COMMIT_MESSAGE" value="new laravel-admin work" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1594520878694">
+    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1594894137081">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594894137081" />
     <state x="558" y="87" key="CommitChangelistDialog2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594520878694" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1594428631501">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1594885577849">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594885577849" />
     <state x="740" y="275" key="FileChooserDialogImpl/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594428631501" />
     <state x="776" y="443" key="NewPhpFileDialog" timestamp="1594695767460">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -201,9 +211,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594782221491" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594522155846">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594799503248">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594799503248" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594522155846" />
   </component>
 </project>

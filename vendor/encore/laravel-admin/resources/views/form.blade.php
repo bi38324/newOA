@@ -3,7 +3,7 @@
         <h3 class="box-title">{{ $form->title() }}</h3>
 
         <div class="box-tools">
-            {!! $form->renderTools() !!}
+{{--            {!! $form->renderTools() !!}--}}
         </div>
     </div>
     <!-- /.box-header -->

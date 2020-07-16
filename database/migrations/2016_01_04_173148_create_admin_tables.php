@@ -23,14 +23,21 @@ class CreateAdminTables extends Migration
     {
         Schema::create(config('admin.database.users_table'), function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name')->comment('真实姓名')->nullable();
             $table->string('username', 190)->comment('用户名')->unique();
             $table->string('password', 60)->comment('密码');
-            $table->string('avatar')->nullable();
-            $table->string('name')->comment('真实姓名');
+            $table->tinyInteger('sex')->comment('性别: 0:男 1：女')->default(0);
+            $table->string('phone')->comment('手机号')->nullable();
+            $table->string('avatar')->comment('头像')->nullable();
             $table->string('signed')->comment('签名')->nullable();
-            $table->string('')->comment('签名')->nullable();
+            $table->string('birthday')->comment('生日')->nullable();
+            $table->tinyInteger('is_job')->comment('在职状态: 0:在职 1：离职')->default(0);
+            $table->string('entry_time')->comment('入职时间')->nullable();
+            $table->string('quit_time')->comment('离职时间')->nullable();
+            $table->string('open_id')->comment('微信openid')->nullable();
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create(config('admin.database.roles_table'), function (Blueprint $table) {
