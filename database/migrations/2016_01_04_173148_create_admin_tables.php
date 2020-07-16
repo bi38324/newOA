@@ -32,6 +32,7 @@ class CreateAdminTables extends Migration
             $table->string('signed')->comment('签名')->nullable();
             $table->string('birthday')->comment('生日')->nullable();
             $table->tinyInteger('is_job')->comment('在职状态: 0:在职 1：离职')->default(0);
+            $table->integer('dept_id')->comment('所属部门')->nullable();
             $table->string('entry_time')->comment('入职时间')->nullable();
             $table->string('quit_time')->comment('离职时间')->nullable();
             $table->string('open_id')->comment('微信openid')->nullable();

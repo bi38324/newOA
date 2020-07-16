@@ -31,19 +31,30 @@ class UserController extends AdminController
         $grid->column('username', trans('admin.username'));
         $grid->column('name', trans('员工姓名'));
         $grid->column('roles', trans('admin.roles'))->pluck('name')->label();
-        $grid->column('created_at', trans('admin.created_at'));
-        $grid->column('updated_at', trans('admin.updated_at'));
+        $grid->column('sex', trans('性别'))->using([0 => '男', 1 => '女']);
+        $grid->column('birthday', trans('生日'));
+        $grid->column('entry_time', trans('入职时间'));
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             if ($actions->getKey() == 1) {
                 $actions->disableDelete();
             }
         });
-
+        $grid->disableRowSelector();
         $grid->tools(function (Grid\Tools $tools) {
             $tools->batch(function (Grid\Tools\BatchActions $actions) {
                 $actions->disableDelete();
             });
+        });
+        $grid->disableExport();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->like('name', '员工姓名');
+            $filter->equal('entry_time', '入职时间')->datetime(['format' => 'YYYY年MM月DD日']);
+            $filter->like('birthday', '生日')->datetime(['format' => 'MM月']);
+
         });
 
         return $grid;

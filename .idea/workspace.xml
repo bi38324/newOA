@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="new laravel-admin work">
+    <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2016_01_04_173148_create_admin_tables.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2016_01_04_173148_create_admin_tables.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/form/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/form/footer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/show/panel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/show/panel.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Controllers/UserController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -166,7 +165,7 @@
       <workItem from="1594694096035" duration="2588000" />
       <workItem from="1594718966179" duration="351000" />
       <workItem from="1594775157836" duration="18166000" />
-      <workItem from="1594859732818" duration="20999000" />
+      <workItem from="1594859732818" duration="25905000" />
     </task>
     <task id="LOCAL-00001" summary="new laravel-admin work">
       <created>1594521026638</created>
@@ -182,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594799485540</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="修改员工管理模块字段">
+      <created>1594894309288</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1594894309288</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,31 +196,33 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new laravel-admin work" />
-    <option name="LAST_COMMIT_MESSAGE" value="new laravel-admin work" />
+    <MESSAGE value="修改员工管理模块字段" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改员工管理模块字段" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1594894137081">
+    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1594894304532">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594894137081" />
+    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594894304532" />
     <state x="558" y="87" key="CommitChangelistDialog2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594520878694" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1594885577849">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594885577849" />
     <state x="740" y="275" key="FileChooserDialogImpl/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594428631501" />
-    <state x="776" y="443" key="NewPhpFileDialog" timestamp="1594695767460">
+    <state x="776" y="443" key="NewPhpFileDialog" timestamp="1594896041428">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="776" y="443" key="NewPhpFileDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594896041428" />
     <state x="776" y="443" key="NewPhpFileDialog/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594695767460" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1594782221491">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594782221491" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594799503248">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594894315906">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594799503248" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594894315906" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594522155846" />
   </component>
 </project>
