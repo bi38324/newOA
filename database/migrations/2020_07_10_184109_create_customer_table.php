@@ -32,6 +32,7 @@ class CreateCustomerTable extends Migration
 
         Schema::create('customer_demand', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
+            $table->integer('customer_id')->comment('客户ID');
             $table->longText('demand')->comment('客户需求');
             $table->timestamps();
             $table->softDeletes();
@@ -58,6 +59,7 @@ class CreateCustomerTable extends Migration
             $table->string('title')->comment('模板标题');
             $table->string('img_path')->comment('模板图片地址');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement("ALTER TABLE `card_template` comment '名片模板表'");
 
@@ -67,6 +69,7 @@ class CreateCustomerTable extends Migration
             $table->integer('card_template_id')->comment('名片模板ID');
             $table->string('img_path')->comment('背景图地址');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement("ALTER TABLE `customer_contact_card` comment '联系人名片表'");
 
@@ -76,6 +79,7 @@ class CreateCustomerTable extends Migration
             $table->integer('PID')->comment('父级ID')->default(0);
             $table->integer('sort')->comment('排序')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement("ALTER TABLE `channel` comment '渠道管理'");
 
@@ -104,7 +108,6 @@ class CreateCustomerTable extends Migration
             $table->integer('product_id')->comment('产品ID');
             $table->integer('params_id')->comment('产品参数ID');
             $table->timestamps();
-            $table->softDeletes();
         });
         DB::statement("ALTER TABLE `product_params` comment '产品参数管理'");
 
@@ -126,8 +129,9 @@ class CreateCustomerTable extends Migration
             $table->increments('id')->comment('主键id');
             $table->string('order_code')->comment('订单号');
             $table->integer('customer_id')->comment('客户ID');
-            $table->integer('customer_title')->comment('客户名称');
+            $table->string('customer_title')->comment('客户名称');
             $table->integer('customer_demand_id')->comment('客户需求ID');
+            $table->integer('product_id')->comment('产品ID');
             $table->timestamp('start_time')->comment('开通时间');
             $table->timestamp('end_time')->comment('结束时间');
             $table->integer('admin_user_id')->comment('所属销售');

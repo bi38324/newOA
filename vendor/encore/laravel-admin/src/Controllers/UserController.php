@@ -2,6 +2,7 @@
 
 namespace Encore\Admin\Controllers;
 
+use App\Http\Model\Department;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -54,6 +55,7 @@ class UserController extends AdminController
             $filter->like('name', '员工姓名');
             $filter->equal('entry_time', '入职时间')->datetime(['format' => 'YYYY年MM月DD日']);
             $filter->like('birthday', '生日')->datetime(['format' => 'MM月']);
+            $filter->equal('dept_id', '部门')->select(Department::selectOptions());
 
         });
 
@@ -129,6 +131,7 @@ class UserController extends AdminController
 
         $form->ignore(['password_confirmation']);
         $form->datetime('entry_time', __('入职时间'))->format('YYYY年MM月DD日')->required();
+        $form->select('dept_id', __('所属部门'))->options(Department::selectOptions(null, '请选择'))->required();
 
         $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
         $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
