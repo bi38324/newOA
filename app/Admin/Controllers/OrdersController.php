@@ -7,6 +7,7 @@ use App\Http\Model\Customer;
 use App\Http\Model\CustomerDemand;
 use App\Http\Model\Orders;
 use App\Http\Model\OrdersStatus;
+use App\Http\Model\ordersStatusLog;
 use App\Http\Model\Product;
 use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
@@ -61,6 +62,10 @@ class OrdersController extends AdminController
         {
             $grid->column('orders_status.commerce_status', __('开发状态'))->editable('select', [0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
             $grid->column('file_url', __('附件地址'))->downloadable();
+        }
+        if($user->isRole('it') || $user->isRole('administrator'))
+        {
+            $grid->column('orders_status.it_status', __('技术状态'))->editable('select', [0 => '待处理', 1 => '处理中', 2 => '处理完成']);
         }
         $grid->column('status', __('订单状态'))->using([0 => '待开发', 1 => '开发中', 2 => '开发完成', 3 => '已交付', 4 => '已关闭']);
 
@@ -199,6 +204,56 @@ class OrdersController extends AdminController
                 }
             }
             return redirect(admin_url('/orders'));
+        }
+    }
+
+    public function update($id)
+    {
+        $parame = request()->all();
+        $admin = new Admin();
+        $user = $admin->user();
+        $orders = (new Orders())->where('id', $id)->firstOrFail();
+        if(isset($parame['_editable']))
+        {
+            $param = explode('.', $parame['name']);
+            $parame[$param[1]] = $parame['value'];
+            unset($parame['name']);
+            unset($parame['value']);
+            unset($parame['pk']);
+            $ex_params = explode('_', $param[1]);
+            if ($ex_params[0] == 'finance')
+            {
+                $parame['finance_user_id'] = $user->id;
+                if ($parame['finance_status'] == 2)
+                {
+                    $p['status'] = 1;
+                    $orders_res = $orders->update($p);
+                }
+            }elseif ($ex_params[0] == 'commerce')
+            {
+                $parame['commerce_user_id'] = $user->id;
+            }elseif ($ex_params[0] == 'it')
+            {
+                $parame['it_user_id'] = $user->id;
+            }elseif ($ex_params[0] == 'check')
+            {
+                $parame['check_user_id'] = $user->id;
+                if ($parame['check_status'] == 2)
+                {
+                    $p['status'] = 2;
+                    $orders_res = $orders->update($p);
+                }
+            }
+            $orders_status = new OrdersStatus();
+            $orders_status_info = $orders_status->getByOrdersId($id);
+            $res = $orders_status_info->update($parame);
+            $result = (new OrdersStatusLog())->create($parame);
+
+        } else {
+            $result = $orders->update($parame);
+            if($result) {
+                return redirect(admin_url('/orders'));
+            }
         }
     }
 }
