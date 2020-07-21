@@ -9,6 +9,7 @@ class Orders extends Model
 {
     protected $table = 'orders';
     protected $guarded = [];
+    protected $appends = ['file_url'];
     use SoftDeletes;
 
     // 创建一个订单号
@@ -32,6 +33,11 @@ class Orders extends Model
         return $this->hasMany(OrdersDetail::class,'orders_id','id');
     }
 
+    public function orders_status()
+    {
+        return $this->hasOne(OrdersStatus::class,'id','orders_id');
+    }
+
     public function admin_user()
     {
         return $this->hasOne(AdminUsers::class, 'id', 'admin_user_id');
@@ -47,4 +53,10 @@ class Orders extends Model
         return $this->hasOne(CustomerDemand::class, 'id', 'customer_demand_id');
     }
 
+    public function getFileUrlAttribute()
+    {
+        $file_url = env('APP_URL').'upload/'.$this->file_path;
+
+        return $file_url;
+    }
 }

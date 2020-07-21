@@ -6,6 +6,7 @@ use App\Http\Model\AdminUsers;
 use App\Http\Model\Customer;
 use App\Http\Model\CustomerDemand;
 use App\Http\Model\Orders;
+use App\Http\Model\OrdersStatus;
 use App\Http\Model\Product;
 use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
@@ -48,14 +49,31 @@ class OrdersController extends AdminController
         $grid->column('start_time', __('开始时间'));
         $grid->column('end_time', __('结束时间'));
         $grid->column('admin_user.name', __('所属销售'));
-        $grid->column('price', __('销售金额'));
-        $grid->column('receivable', __('应收金额'));
-        $grid->column('receipts', __('实收金额'));
-        $grid->column('sales_remark', __('销售备注'));
-        $grid->column('it_remark', __('技术备注'));
-        $grid->column('file_path', __('附件地址'));
+        if($user->isRole('finance') || $user->isRole('administrator'))
+        {
+            $grid->column('orders_status.finance_status', __('财务状态'))->editable('select', [0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
+        }
+        if($user->isRole('check') || $user->isRole('administrator'))
+        {
+            $grid->column('orders_status.check_status', __('验收状态'))->editable('select', [0 => '待处理', 1 => '验收不合格', 2 => '验收通过']);
+        }
+        if($user->isRole('commerce') || $user->isRole('administrator'))
+        {
+            $grid->column('orders_status.commerce_status', __('开发状态'))->editable('select', [0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
+            $grid->column('file_url', __('附件地址'))->downloadable();
+        }
         $grid->column('status', __('订单状态'))->using([0 => '待开发', 1 => '开发中', 2 => '开发完成', 3 => '已交付', 4 => '已关闭']);
 
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->like('customer_title', '客户名称');
+            $filter->equal('product_id', '产品名称')->select(Product::selectOptions());
+            $filter->between('start_time', '开始时间')->datetime();
+            $filter->between('end_time', '结束时间')->datetime();
+            $filter->equal('admin_user_id', '所属销售')->select(AdminUsers::all()->pluck('name', 'id'));
+        });
         return $grid;
     }
 
@@ -84,8 +102,6 @@ class OrdersController extends AdminController
         $show->field('it_remark', __('技术备注'));
         $show->field('file_path', __('附件地址'));
         $show->field('status', __('订单状态'))->using([0 => '待开发', 1 => '开发中', 2 => '开发完成', 3 => '已交付', 4 => '已关闭']);
-        $show->field('created_at', __('提交时间'));
-        $show->field('updated_at', __('更新时间'));
         $show->panel()
             ->tools(function ($tools) {
                 $tools->disableEdit();
@@ -96,13 +112,31 @@ class OrdersController extends AdminController
             $account->resource('/admin/orders-details');
             $account->column('id', 'ID');
             $account->column('product_params.title', '参数名称');
-            $account->column('value', '参数值');
+            $account->column('value', '参数值')->editable();
             $account->disableRowSelector();
             $account->disableColumnSelector();
             $account->disableExport();
             $account->disableFilter();
             $account->perPages([5, 10, 20, 30, 50,100]);
             $account->paginate(5);
+            $account->disableActions();
+        });
+
+        $show->orders_status('订单状态', function ($account) use ($id) {
+            $account->column('finance_status', '财务状态')->using([0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
+            $account->column('finance_remark', '财务备注');
+            $account->column('finance_user_id', '财务审批人')->as(function ($content) {
+                dd($content);
+                return "<pre>{$content}</pre>";
+            });
+            $account->disableRowSelector();
+            $account->disableColumnSelector();
+            $account->disableCreateButton();
+            $account->disableExport();
+            $account->disableFilter();
+            $account->perPages([5, 10, 20, 30, 50,100]);
+            $account->paginate(5);
+            $account->disableActions();
         });
         return $show;
     }
@@ -137,7 +171,6 @@ class OrdersController extends AdminController
         $form->textarea('it_remark', __('技术备注'));
         $form->file('file_path', __('上传附件'));
         $form->radio('status', __('订单状态'))->options([0 => '待开发', 1 => '开发中', 2 => '开发完成', 3 => '已交付', 4 => '已关闭'])->default(0);
-//        $form->html($this->settingTime($default_info['times_setting']??''),'');
 
         return $form;
     }
@@ -159,40 +192,13 @@ class OrdersController extends AdminController
             {
                 $params['customer_title'] = $customer->title;
                 $result = (new Orders())->create($params);
+                if ($result)
+                {
+                    $orders_status['orders_id'] = $result->id;
+                    $res = (new OrdersStatus())->create($orders_status);
+                }
             }
             return redirect(admin_url('/orders'));
         }
     }
-
-//    protected function settingTime($setting = []){
-//        $this->settingScript();
-//        $setting = [];
-//        $customer_id = Admin::script($this->script());
-//        dd($customer_id);
-//
-//        return view('admin.orders', compact('详情'));
-//    }
-//    protected function settingScript()
-//    {
-//        $script = <<<'EOT'
-//$('.').iCheck({checkboxClass:'icheckbox_minimal-blue'});
-//EOT;
-//
-//        Admin::script($script);
-//    }
-//
-//    protected function script()
-//    {
-//
-//        return <<<SCRIPT
-//$(document).ready(function() {
-//
-//         $('select[name="customer_id"]').on('change',function(){
-//         return $(this).val();
-//         });
-//     });
-//SCRIPT;
-//
-//    }
-
 }

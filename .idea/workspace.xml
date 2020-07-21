@@ -2,47 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/ApiController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/CardTemplateController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/ChannelController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerContactCartController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerContactController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerDemandController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/DepartmentController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersDetailController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersLogController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersStatusController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersStatusLogController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/ParamsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProductController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProductParamsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/AdminUsers.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/CardTemplate.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/Channel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/Customer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/CustomerContact.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/CustomerContactCard.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/CustomerDemand.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/Department.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/Industry.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/Orders.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/OrdersDetail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/OrdersLog.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/OrdersStatus.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/Params.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/Product.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/ProductParams.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Model/ordersStatusLog.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/upload/images/杨佳敏.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/Admin/orders.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/upload/files/技术外包客户需求确认表.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/OrdersDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersDetailController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/ProductParamsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProductParamsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Model/Orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/Orders.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Model/OrdersDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/OrdersDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Model/Params.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/Params.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_10_184109_create_customer_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_10_184109_create_customer_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/partials/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/partials/footer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Admin/orders.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Admin/orders.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +152,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../youth_activity_center" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -217,7 +186,8 @@
       <workItem from="1594775157836" duration="18166000" />
       <workItem from="1594859732818" duration="26657000" />
       <workItem from="1594978333929" duration="10478000" />
-      <workItem from="1595207264496" duration="33591000" />
+      <workItem from="1595207264496" duration="33665000" />
+      <workItem from="1595292769019" duration="15216000" />
     </task>
     <task id="LOCAL-00001" summary="new laravel-admin work">
       <created>1594521026638</created>
@@ -254,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594993374283</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="修改订单表字段。">
+      <created>1595247247031</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1595247247031</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,7 +243,8 @@
     <MESSAGE value="修改员工管理模块字段" />
     <MESSAGE value="修改订单表和产品相关表字段" />
     <MESSAGE value="0717表备份" />
-    <option name="LAST_COMMIT_MESSAGE" value="0717表备份" />
+    <MESSAGE value="修改订单表字段。" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改订单表字段。" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="295" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1595210366432">
@@ -277,14 +255,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595209398961" />
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1595245912980">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1595305166242">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595245912980" />
-    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1594993370884">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595305166242" />
+    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1595247241402">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594993370884" />
+    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595247241402" />
     <state x="558" y="87" key="CommitChangelistDialog2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594520878694" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1595215244375">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -300,26 +278,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594782221491" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594993384490">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595247249834">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594993384490" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595247249834" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594522155846" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595244324718">
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595301353092">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595244324718" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595301353092" />
     <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595240054724">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595240054724" />
-    <state x="662" y="252" width="596" height="536" key="find.popup" timestamp="1595246784040">
+    <state x="662" y="252" width="616" height="536" key="find.popup" timestamp="1595313351811">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="662" y="252" width="596" height="536" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595246784040" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1595236656627">
+    <state x="662" y="252" width="616" height="536" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595313351811" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1595297852750">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595236656627" />
+    <state x="616" y="240" key="run.anything.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595297852750" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1595312480157">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595312480157" />
   </component>
 </project>

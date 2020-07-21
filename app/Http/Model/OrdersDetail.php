@@ -13,6 +13,6 @@ class OrdersDetail extends Model
 
     public function product_params()
     {
-        return $this->belongsTo(ProductParams::class, 'product_params_id', 'id');
+        return $this->belongsTo(Params::class, 'params_id', 'id');
     }
 }

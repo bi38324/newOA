@@ -171,7 +171,7 @@ class CreateCustomerTable extends Migration
         Schema::create('orders_detail', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
             $table->integer('orders_id')->comment('订单ID');
-            $table->integer('product_params_id')->comment('产品参数ID');
+            $table->integer('params_id')->comment('产品参数ID');
             $table->string('value')->comment('参数值');
             $table->timestamps();
             $table->softDeletes();
@@ -181,7 +181,7 @@ class CreateCustomerTable extends Migration
         Schema::create('orders_log', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
             $table->integer('orders_id')->comment('订单ID');
-            $table->integer('product_params_id')->comment('产品参数ID')->nullable();
+            $table->integer('params_id')->comment('产品参数ID')->nullable();
             $table->string('value')->comment('参数值')->nullable();
             $table->tinyInteger('status')->comment('订单状态 0：待开发 1：开发中 2:开发完成 3：已交付 4：已关闭')->default(0);
             $table->integer('admin_user_id')->comment('操作人ID');
