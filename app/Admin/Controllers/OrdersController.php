@@ -127,22 +127,22 @@ class OrdersController extends AdminController
             $account->disableActions();
         });
 
-        $show->orders_status('订单状态', function ($account) use ($id) {
-            $account->column('finance_status', '财务状态')->using([0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
-            $account->column('finance_remark', '财务备注');
-            $account->column('finance_user_id', '财务审批人')->as(function ($content) {
-                dd($content);
-                return "<pre>{$content}</pre>";
-            });
-            $account->disableRowSelector();
-            $account->disableColumnSelector();
-            $account->disableCreateButton();
-            $account->disableExport();
-            $account->disableFilter();
-            $account->perPages([5, 10, 20, 30, 50,100]);
-            $account->paginate(5);
-            $account->disableActions();
-        });
+//        $show->orders_status('订单状态', function ($account) use ($id) {
+//            $account->column('finance_status', '财务状态')->using([0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
+//            $account->column('finance_remark', '财务备注');
+////            $account->column('finance_user_id', '财务审批人')->as(function ($content) {
+////                dd($content);
+////                return "<pre>{$content}</pre>";
+////            });
+//            $account->disableRowSelector();
+//            $account->disableColumnSelector();
+//            $account->disableCreateButton();
+//            $account->disableExport();
+//            $account->disableFilter();
+//            $account->perPages([5, 10, 20, 30, 50,100]);
+//            $account->paginate(5);
+//            $account->disableActions();
+//        });
         return $show;
     }
 
@@ -207,53 +207,54 @@ class OrdersController extends AdminController
         }
     }
 
-    public function update($id)
-    {
-        $parame = request()->all();
-        $admin = new Admin();
-        $user = $admin->user();
-        $orders = (new Orders())->where('id', $id)->firstOrFail();
-        if(isset($parame['_editable']))
-        {
-            $param = explode('.', $parame['name']);
-            $parame[$param[1]] = $parame['value'];
-            unset($parame['name']);
-            unset($parame['value']);
-            unset($parame['pk']);
-            $ex_params = explode('_', $param[1]);
-            if ($ex_params[0] == 'finance')
-            {
-                $parame['finance_user_id'] = $user->id;
-                if ($parame['finance_status'] == 2)
-                {
-                    $p['status'] = 1;
-                    $orders_res = $orders->update($p);
-                }
-            }elseif ($ex_params[0] == 'commerce')
-            {
-                $parame['commerce_user_id'] = $user->id;
-            }elseif ($ex_params[0] == 'it')
-            {
-                $parame['it_user_id'] = $user->id;
-            }elseif ($ex_params[0] == 'check')
-            {
-                $parame['check_user_id'] = $user->id;
-                if ($parame['check_status'] == 2)
-                {
-                    $p['status'] = 2;
-                    $orders_res = $orders->update($p);
-                }
-            }
-            $orders_status = new OrdersStatus();
-            $orders_status_info = $orders_status->getByOrdersId($id);
-            $res = $orders_status_info->update($parame);
-            $result = (new OrdersStatusLog())->create($parame);
-
-        } else {
-            $result = $orders->update($parame);
-            if($result) {
-                return redirect(admin_url('/orders'));
-            }
-        }
-    }
+//    public function update($id)
+//    {
+//        $parame = request()->all();
+//        $admin = new Admin();
+//        $user = $admin->user();
+//        $orders = (new Orders())->where('id', $id)->firstOrFail();
+//        if(isset($parame['_editable']))
+//        {
+//            $param = explode('.', $parame['name']);
+//            $parame[$param[1]] = $parame['value'];
+//            unset($parame['name']);
+//            unset($parame['value']);
+//            unset($parame['pk']);
+//            $ex_params = explode('_', $param[1]);
+//            if ($ex_params[0] == 'finance')
+//            {
+//                $parame['finance_user_id'] = $user->id;
+//                if ($parame['finance_status'] == 2)
+//                {
+//                    $p['status'] = 1;
+//                    $orders_res = $orders->update($p);
+//                }
+//            }elseif ($ex_params[0] == 'commerce')
+//            {
+//                $parame['commerce_user_id'] = $user->id;
+//            }elseif ($ex_params[0] == 'it')
+//            {
+//                $parame['it_user_id'] = $user->id;
+//            }elseif ($ex_params[0] == 'check')
+//            {
+//                $parame['check_user_id'] = $user->id;
+//                if ($parame['check_status'] == 2)
+//                {
+//                    $p['status'] = 2;
+//                    $orders_res = $orders->update($p);
+//                }
+//            }
+//            $orders_status = new OrdersStatus();
+//            $orders_status_info = $orders_status->getByOrdersId($id);
+//            $res = $orders_status_info->update($parame);
+//            $parame['orders_id'] = $id;
+//            $result = (new OrdersStatusLog())->create($parame);
+//
+//        } else {
+//            $result = $orders->update($parame);
+//            if($result) {
+//                return redirect(admin_url('/orders'));
+//            }
+//        }
+//    }
 }

@@ -151,16 +151,18 @@ class CreateCustomerTable extends Migration
         Schema::create('orders_status', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
             $table->integer('orders_id')->comment('客户ID');
-            $table->tinyInteger('finance_status')->comment('财务认证 0：待处理  1:未收到款  2: 已收到款')->nullable();
+            $table->tinyInteger('customer_status')->comment('客户状态 0：待处理  1:确认需求无误')->nullable()->default(0);
+            $table->integer('customer_contact_id')->comment('客户联系人ID')->nullable()->default(0);
+            $table->tinyInteger('finance_status')->comment('财务认证 0：待处理  1:未收到款  2: 已收到款')->nullable()->default(0);
             $table->string('finance_remark')->comment('财务备注')->nullable();
             $table->integer('finance_user_id')->comment('财务审批人')->nullable();
-            $table->tinyInteger('commerce_status')->comment('商务部认证 0：待处理  1：资料不完整 2：开发中 3：申请技术协助 4:开发完成')->nullable();
+            $table->tinyInteger('commerce_status')->comment('商务部认证 0：待处理  1：资料不完整 2：开发中 3：申请技术协助 4:开发完成')->nullable()->default(0);
             $table->string('commerce_remark')->comment('商务部备注')->nullable();
             $table->integer('commerce_user_id')->comment('商务部操作人ID')->nullable();
-            $table->tinyInteger('it_status')->comment('技术认证 0：待处理 1：处理中 2：处理完成')->nullable();
+            $table->tinyInteger('it_status')->comment('技术认证 0：待处理 1：处理中 2：处理完成')->nullable()->default(0);
             $table->string('it_remark')->comment('技术备注')->nullable();
             $table->integer('it_user_id')->comment('技术操作人ID')->nullable();
-            $table->tinyInteger('check_status')->comment('验收认证 0：待处理 1：不合格 2：验收通过')->nullable();
+            $table->tinyInteger('check_status')->comment('验收认证 0：待处理 1：不合格 2：验收通过')->nullable()->default(0);
             $table->string('check_remark')->comment('验收人备注')->nullable();
             $table->integer('check_user_id')->comment('验收操作人ID')->nullable();
             $table->timestamps();

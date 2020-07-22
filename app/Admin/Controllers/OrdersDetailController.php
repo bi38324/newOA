@@ -108,33 +108,33 @@ class OrdersDetailController extends AdminController
         return redirect(admin_url('/orders/'.$params['orders_id']));
     }
 
-    // 修改保存
-    public function update()
-    {
-        $parame = request()->all();
-        $data = [];
-        $parame[$parame['name']] = $parame['value'];
-        unset($parame['name']);
-        unset($parame['value']);
-        unset($parame['pk']);
-        $yhr_directSeeding = (new YinhangrenDirectSeeding())->where('id', $id)->firstOrFail();
-        $result = $yhr_directSeeding->update($parame);
-        if ($result)
-        {
-            // 同步修改服务号
-            $subject = new Subject();
-            $subject_info = $subject->getSubjectInfoByYSubjectId($id,0);
-            if (array_key_exists('is_show', $parame))
-            {
-                $data['is_show'] = !$parame['is_show'];
-            } elseif (array_key_exists('state', $parame))
-            {
-                $data['status'] = $parame['state'];
-            }
-            $res = $subject_info->update($data);
-        }
-        return redirect(admin_url('/orders/'.$params['orders_id']));
-    }
+//    // 修改保存
+//    public function update()
+//    {
+//        $parame = request()->all();
+//        $data = [];
+//        $parame[$parame['name']] = $parame['value'];
+//        unset($parame['name']);
+//        unset($parame['value']);
+//        unset($parame['pk']);
+//        $yhr_directSeeding = (new YinhangrenDirectSeeding())->where('id', $id)->firstOrFail();
+//        $result = $yhr_directSeeding->update($parame);
+//        if ($result)
+//        {
+//            // 同步修改服务号
+//            $subject = new Subject();
+//            $subject_info = $subject->getSubjectInfoByYSubjectId($id,0);
+//            if (array_key_exists('is_show', $parame))
+//            {
+//                $data['is_show'] = !$parame['is_show'];
+//            } elseif (array_key_exists('state', $parame))
+//            {
+//                $data['status'] = $parame['state'];
+//            }
+//            $res = $subject_info->update($data);
+//        }
+//        return redirect(admin_url('/orders/'.$params['orders_id']));
+//    }
 
     protected function settingTime($params_list = [], $orders = []){
         return view('admin.orders', ['params_list' => $params_list, 'orders' => $orders]);

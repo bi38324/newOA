@@ -15,4 +15,9 @@ class OrdersStatus extends Model
     {
         return $this->where('orders_id', $orders_id)->first();
     }
+
+    public function orders()
+    {
+        return $this->belongsTo(OrdersStatus::class, 'orders_id', 'id');
+    }
 }
