@@ -21,6 +21,16 @@ class Customer extends Model
         return $this->hasOne(Industry::class, 'id', 'channel_id');
     }
 
+    public function customer_contact()
+    {
+        return $this->hasMany(CustomerContact::class,'customer_id','id');
+    }
+
+    public function customer_demand()
+    {
+        return $this->hasMany(CustomerDemand::class,'customer_id','id');
+    }
+
     public function owner_user()
     {
         return $this->hasOne(AdminUsers::class, 'id', 'owner_user_id');

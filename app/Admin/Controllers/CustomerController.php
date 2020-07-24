@@ -78,6 +78,37 @@ class CustomerController extends AdminController
                 $tools->disableEdit();
                 $tools->disableDelete();
             });;
+
+        $show->customer_demand('客户需求管理', function ($account) use ($id) {
+            $account->resource('/admin/customer-demands');
+            $account->column('id', 'ID');
+            $account->column('customer.title', __('客户名称'));
+            $account->column('demand', __('客户需求'));
+            $account->disableRowSelector();
+            $account->disableColumnSelector();
+            $account->disableExport();
+            $account->disableFilter();
+            $account->perPages([5, 10, 20, 30, 50,100]);
+            $account->paginate(5);
+        });
+
+        $show->customer_contact('联系人管理', function ($account) use ($id) {
+            $account->resource('/admin/customer-contacts');
+            $account->column('id', 'ID');
+            $account->column('name', '联系人姓名');
+            $account->column('phone', '联系人电话');
+            $account->column('customer_demand.demand', '客户需求');
+            $account->column('is_first', __('是否为第一联系人'))->using([0 => '否', 1 => '是']);
+            $account->column('headImgUrl', __('头像'))->image();
+            $account->column('sex', __('性别'))->using([0 => '男', 1 => '女']);
+            $account->disableRowSelector();
+            $account->disableColumnSelector();
+            $account->disableExport();
+            $account->disableFilter();
+            $account->perPages([5, 10, 20, 30, 50,100]);
+            $account->paginate(5);
+        });
+
         return $show;
     }
 

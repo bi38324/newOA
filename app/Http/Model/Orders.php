@@ -35,7 +35,7 @@ class Orders extends Model
 
     public function orders_status()
     {
-        return $this->hasOne(OrdersStatus::class,'id','orders_id');
+        return $this->belongsTo(OrdersStatus::class,'id','orders_id');
     }
 
     public function admin_user()

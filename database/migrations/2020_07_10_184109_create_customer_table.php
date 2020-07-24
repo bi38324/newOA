@@ -46,8 +46,8 @@ class CreateCustomerTable extends Migration
             $table->string('name')->comment('联系人名称');
             $table->string('phone')->comment('联系电话');
             $table->tinyInteger('is_first')->comment('是否是第一联系人 0：否 1：是')->default(0);
-            $table->string('open_id')->comment('微信openId');
-            $table->string('headImgUrl')->comment('头像');
+            $table->string('open_id')->comment('微信openId')->nullable();
+            $table->string('headImgUrl')->comment('头像')->nullable();
             $table->tinyInteger('sex')->comment('性别');
             $table->timestamps();
             $table->softDeletes();
