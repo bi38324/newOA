@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/newOa.rar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/newOa.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/newOa.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/zh-CN/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/zh-CN/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/content.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/resources/views/content.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +186,7 @@
       <workItem from="1595292769019" duration="24968000" />
       <workItem from="1595378768365" duration="9169000" />
       <workItem from="1595464465564" duration="12768000" />
-      <workItem from="1595567867614" duration="3678000" />
+      <workItem from="1595567867614" duration="9243000" />
     </task>
     <task id="LOCAL-00001" summary="new laravel-admin work">
       <created>1594521026638</created>
@@ -259,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595386600929</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="修改composer依赖。">
+      <created>1595581217872</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1595581217872</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,7 +273,9 @@
     <MESSAGE value="修改订单表字段。" />
     <MESSAGE value="修改订单状态" />
     <MESSAGE value="修改订单状态，同步到日志表记录" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改订单状态，同步到日志表记录" />
+    <MESSAGE value="修改composer依赖。" />
+    <MESSAGE value="解决面包屑汉化问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="解决面包屑汉化问题" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="295" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1595210366432">
@@ -289,10 +290,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595320959049" />
-    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1595386596133">
+    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1595591486255">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595386596133" />
+    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595591486255" />
     <state x="558" y="87" key="CommitChangelistDialog2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594520878694" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1595380026064">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -308,23 +309,24 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594782221491" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595386605307">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595581222921">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595386605307" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595581222921" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594522155846" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595506091842">
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595588542066">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595506091842" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595588542066" />
     <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595240054724">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595240054724" />
-    <state x="662" y="252" width="616" height="536" key="find.popup" timestamp="1595499555240">
+    <state x="662" y="252" width="616" height="536" key="find.popup" timestamp="1595588440185">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="662" y="252" width="616" height="536" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595499555240" />
+    <state x="662" y="252" width="616" height="536" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595588440185" />
+    <state x="2582" y="252" width="616" height="536" key="find.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1595583721710" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1595297852750">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
