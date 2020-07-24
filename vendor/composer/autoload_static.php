@@ -34,6 +34,7 @@ class ComposerStaticInitf7385d6d0e420ee719ed4f46bf694fa5
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         '4e8671d7be9056dcd04ddd9e8e15f9cc' => __DIR__ . '/..' . '/encore/laravel-admin/src/helpers.php',
+        'f960e77410032f236cef8c56617b313e' => __DIR__ . '/..' . '/overtrue/laravel-lang/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -107,6 +108,7 @@ class ComposerStaticInitf7385d6d0e420ee719ed4f46bf694fa5
         ),
         'O' => 
         array (
+            'Overtrue\\LaravelLang\\' => 21,
             'Opis\\Closure\\' => 13,
         ),
         'N' => 
@@ -353,6 +355,10 @@ class ComposerStaticInitf7385d6d0e420ee719ed4f46bf694fa5
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+        'Overtrue\\LaravelLang\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/overtrue/laravel-lang/src',
+        ),
         'Opis\\Closure\\' => 
         array (
             0 => __DIR__ . '/..' . '/opis/closure/src',
@@ -501,10 +507,25 @@ class ComposerStaticInitf7385d6d0e420ee719ed4f46bf694fa5
     );
 
     public static $classMap = array (
+        'App\\Admin\\Controllers\\ApiController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ApiController.php',
         'App\\Admin\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Admin/Controllers/AuthController.php',
+        'App\\Admin\\Controllers\\CardTemplateController' => __DIR__ . '/../..' . '/app/Admin/Controllers/CardTemplateController.php',
+        'App\\Admin\\Controllers\\ChannelController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ChannelController.php',
+        'App\\Admin\\Controllers\\CustomerContactCartController' => __DIR__ . '/../..' . '/app/Admin/Controllers/CustomerContactCartController.php',
+        'App\\Admin\\Controllers\\CustomerContactController' => __DIR__ . '/../..' . '/app/Admin/Controllers/CustomerContactController.php',
         'App\\Admin\\Controllers\\CustomerController' => __DIR__ . '/../..' . '/app/Admin/Controllers/CustomerController.php',
+        'App\\Admin\\Controllers\\CustomerDemandController' => __DIR__ . '/../..' . '/app/Admin/Controllers/CustomerDemandController.php',
+        'App\\Admin\\Controllers\\DepartmentController' => __DIR__ . '/../..' . '/app/Admin/Controllers/DepartmentController.php',
         'App\\Admin\\Controllers\\ExampleController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ExampleController.php',
         'App\\Admin\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Admin/Controllers/HomeController.php',
+        'App\\Admin\\Controllers\\OrdersController' => __DIR__ . '/../..' . '/app/Admin/Controllers/OrdersController.php',
+        'App\\Admin\\Controllers\\OrdersDetailController' => __DIR__ . '/../..' . '/app/Admin/Controllers/OrdersDetailController.php',
+        'App\\Admin\\Controllers\\OrdersLogController' => __DIR__ . '/../..' . '/app/Admin/Controllers/OrdersLogController.php',
+        'App\\Admin\\Controllers\\OrdersStatusController' => __DIR__ . '/../..' . '/app/Admin/Controllers/OrdersStatusController.php',
+        'App\\Admin\\Controllers\\OrdersStatusLogController' => __DIR__ . '/../..' . '/app/Admin/Controllers/OrdersStatusLogController.php',
+        'App\\Admin\\Controllers\\ParamsController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ParamsController.php',
+        'App\\Admin\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ProductController.php',
+        'App\\Admin\\Controllers\\ProductParamsController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ProductParamsController.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
@@ -517,6 +538,23 @@ class ComposerStaticInitf7385d6d0e420ee719ed4f46bf694fa5
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Model\\AdminUsers' => __DIR__ . '/../..' . '/app/Http/Model/AdminUsers.php',
+        'App\\Http\\Model\\CardTemplate' => __DIR__ . '/../..' . '/app/Http/Model/CardTemplate.php',
+        'App\\Http\\Model\\Channel' => __DIR__ . '/../..' . '/app/Http/Model/Channel.php',
+        'App\\Http\\Model\\Customer' => __DIR__ . '/../..' . '/app/Http/Model/Customer.php',
+        'App\\Http\\Model\\CustomerContact' => __DIR__ . '/../..' . '/app/Http/Model/CustomerContact.php',
+        'App\\Http\\Model\\CustomerContactCard' => __DIR__ . '/../..' . '/app/Http/Model/CustomerContactCard.php',
+        'App\\Http\\Model\\CustomerDemand' => __DIR__ . '/../..' . '/app/Http/Model/CustomerDemand.php',
+        'App\\Http\\Model\\Department' => __DIR__ . '/../..' . '/app/Http/Model/Department.php',
+        'App\\Http\\Model\\Industry' => __DIR__ . '/../..' . '/app/Http/Model/Industry.php',
+        'App\\Http\\Model\\Orders' => __DIR__ . '/../..' . '/app/Http/Model/Orders.php',
+        'App\\Http\\Model\\OrdersDetail' => __DIR__ . '/../..' . '/app/Http/Model/OrdersDetail.php',
+        'App\\Http\\Model\\OrdersLog' => __DIR__ . '/../..' . '/app/Http/Model/OrdersLog.php',
+        'App\\Http\\Model\\OrdersStatus' => __DIR__ . '/../..' . '/app/Http/Model/OrdersStatus.php',
+        'App\\Http\\Model\\Params' => __DIR__ . '/../..' . '/app/Http/Model/Params.php',
+        'App\\Http\\Model\\Product' => __DIR__ . '/../..' . '/app/Http/Model/Product.php',
+        'App\\Http\\Model\\ProductParams' => __DIR__ . '/../..' . '/app/Http/Model/ProductParams.php',
+        'App\\Http\\Model\\ordersStatusLog' => __DIR__ . '/../..' . '/app/Http/Model/OrdersStatusLog.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -3465,6 +3503,9 @@ class ComposerStaticInitf7385d6d0e420ee719ed4f46bf694fa5
         'Opis\\Closure\\SecurityProvider' => __DIR__ . '/..' . '/opis/closure/src/SecurityProvider.php',
         'Opis\\Closure\\SelfReference' => __DIR__ . '/..' . '/opis/closure/src/SelfReference.php',
         'Opis\\Closure\\SerializableClosure' => __DIR__ . '/..' . '/opis/closure/src/SerializableClosure.php',
+        'Overtrue\\LaravelLang\\Commands\\Publish' => __DIR__ . '/..' . '/overtrue/laravel-lang/src/Commands/Publish.php',
+        'Overtrue\\LaravelLang\\FileLoader' => __DIR__ . '/..' . '/overtrue/laravel-lang/src/FileLoader.php',
+        'Overtrue\\LaravelLang\\TranslationServiceProvider' => __DIR__ . '/..' . '/overtrue/laravel-lang/src/TranslationServiceProvider.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/AssertionFailedError.php',

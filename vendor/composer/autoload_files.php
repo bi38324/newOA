@@ -33,4 +33,5 @@ return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'b6b991a57620e2fb6b2f66f03fe9ddc2' => $vendorDir . '/symfony/string/Resources/functions.php',
     '4e8671d7be9056dcd04ddd9e8e15f9cc' => $vendorDir . '/encore/laravel-admin/src/helpers.php',
+    'f960e77410032f236cef8c56617b313e' => $vendorDir . '/overtrue/laravel-lang/src/helpers.php',
 );
