@@ -16,6 +16,11 @@ class CustomerDemand extends Model
         return $this->where('customer_id', $customer_id)->get()->toArray();
     }
 
+    public function customer_contact()
+    {
+        return $this->hasOne(CustomerContactDemand::class, 'customer_demand_id', 'id');
+    }
+
     public function customer()
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');

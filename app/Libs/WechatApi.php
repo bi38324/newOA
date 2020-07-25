@@ -17,9 +17,6 @@ class WechatApi
     // 小程序 access token
     const MINI_PROGRAM_TOKEN = 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code';
 
-    const MINI_APP_ID = 'wx4cbec8d337fa4ad3';
-    const MINI_APP_SECRET = '3d392186bf54534466e37dba8493c78e';
-
     private  $appId;
     private  $app_secret;
 

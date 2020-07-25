@@ -2,23 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Helper/functions.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Controller.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/WeChatController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Services/BaseService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Services/WxUserService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/WechatApi.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Traits/Controller.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Traits/Requests.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Traits/Responses.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Model/CustomerContactDemand.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Libs/Upload.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/wechat.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/upload/PC截取局部或整个网页长图.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerContactController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerContactController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerDemandController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerDemandController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Model/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/Customer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/WeChatController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/WeChatController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Model/CustomerContact.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/CustomerContact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Model/Orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/Orders.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Model/CustomerDemand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/CustomerDemand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Libs/WechatApi.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Libs/WechatApi.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_10_184109_create_customer_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_10_184109_create_customer_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -162,20 +158,20 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/config" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\laragon\www\newOa\app\Http\Model" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\laragon\www\newOa\config" />
+      <recent name="F:\laragon\www\newOa\app\Libs" />
       <recent name="F:\laragon\www\newOa\app" />
       <recent name="F:\laragon\www\newOa\app\Http\Controllers\Api" />
       <recent name="F:\laragon\www\newOa" />
-      <recent name="F:\laragon\www\newOa\app\Libs" />
-      <recent name="F:\laragon\www\newOa\app\Http\Services" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\laragon\www\newOa\app\Http\Model" />
     </key>
   </component>
   <component name="RunManager">
@@ -207,7 +203,8 @@
       <workItem from="1595292769019" duration="24968000" />
       <workItem from="1595378768365" duration="9169000" />
       <workItem from="1595464465564" duration="12768000" />
-      <workItem from="1595567867614" duration="14384000" />
+      <workItem from="1595567867614" duration="14515000" />
+      <workItem from="1595639766399" duration="12913000" />
     </task>
     <task id="LOCAL-00001" summary="new laravel-admin work">
       <created>1594521026638</created>
@@ -286,7 +283,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595591494229</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="修改客户管理相关模块">
+      <created>1595598333854</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1595598333854</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,7 +307,8 @@
     <MESSAGE value="修改订单状态，同步到日志表记录" />
     <MESSAGE value="修改composer依赖。" />
     <MESSAGE value="解决面包屑汉化问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="解决面包屑汉化问题" />
+    <MESSAGE value="修改客户管理相关模块" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改客户管理相关模块" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="295" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1595210366432">
@@ -314,50 +319,50 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595209398961" />
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1595597315223">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1595655994663">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595597315223" />
-    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1595591486255">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595655994663" />
+    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1595598329225">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595591486255" />
+    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595598329225" />
     <state x="558" y="87" key="CommitChangelistDialog2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594520878694" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1595594789942">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1595640296736">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595594789942" />
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595640296736" />
     <state x="740" y="275" key="FileChooserDialogImpl/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594428631501" />
     <state x="2631" y="240" key="NewPhpClassDialog" timestamp="1595596436910">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2631" y="240" key="NewPhpClassDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1595596436910" />
-    <state x="776" y="443" key="NewPhpFileDialog" timestamp="1595325103315">
+    <state x="776" y="443" key="NewPhpFileDialog" timestamp="1595643139821">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="776" y="443" key="NewPhpFileDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595325103315" />
+    <state x="776" y="443" key="NewPhpFileDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595643139821" />
     <state x="776" y="443" key="NewPhpFileDialog/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594695767460" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1594782221491">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594782221491" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595591507676">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1595598337429">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595591507676" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595598337429" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594522155846" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595588542066">
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595643867111">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595588542066" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595643867111" />
     <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595240054724">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595240054724" />
-    <state x="662" y="252" width="616" height="536" key="find.popup" timestamp="1595588440185">
+    <state x="662" y="252" width="1062" height="722" key="find.popup" timestamp="1595657178820">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="662" y="252" width="616" height="536" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595588440185" />
+    <state x="662" y="252" width="1062" height="722" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595657178820" />
     <state x="2582" y="252" width="616" height="536" key="find.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1595583721710" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1595297852750">
       <screen x="0" y="0" width="1920" height="1040" />

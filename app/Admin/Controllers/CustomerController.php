@@ -2,10 +2,12 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Extensions\Tools\RecBtn;
 use App\Http\Model\AdminUsers;
 use App\Http\Model\Channel;
 use App\Http\Model\Customer;
+use App\Http\Model\CustomerContact;
+use App\Http\Model\CustomerContactDemand;
+use App\Http\Model\CustomerDemand;
 use App\Http\Model\Industry;
 use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
@@ -84,6 +86,7 @@ class CustomerController extends AdminController
             $account->column('id', 'ID');
             $account->column('customer.title', __('客户名称'));
             $account->column('demand', __('客户需求'));
+            $account->column('customer_contact.contact', __('联系人'));
             $account->disableRowSelector();
             $account->disableColumnSelector();
             $account->disableExport();
@@ -97,16 +100,20 @@ class CustomerController extends AdminController
             $account->column('id', 'ID');
             $account->column('name', '联系人姓名');
             $account->column('phone', '联系人电话');
-            $account->column('customer_demand.demand', '客户需求');
             $account->column('is_first', __('是否为第一联系人'))->using([0 => '否', 1 => '是']);
             $account->column('headImgUrl', __('头像'))->image();
             $account->column('sex', __('性别'))->using([0 => '男', 1 => '女']);
             $account->disableRowSelector();
             $account->disableColumnSelector();
+//            $account->disableCreateButton();
             $account->disableExport();
             $account->disableFilter();
             $account->perPages([5, 10, 20, 30, 50,100]);
             $account->paginate(5);
+//            $account->actions(function($action) {
+//                $action->disableView();
+//                $action->disableDelete();
+//            });
         });
 
         return $show;
@@ -140,5 +147,18 @@ class CustomerController extends AdminController
 
         }
         return $form;
+    }
+
+    // 删除
+    public function destroy($id)
+    {
+        $result = (new Customer())->where('id', $id)->delete();
+        if ($result)
+        {
+            $contact_demand_result = (new CustomerContactDemand())->where('customer_id', $id)->delete();
+            $contact_result = (new CustomerContact())->where('customer_id', $id)->delete();
+            $demand_result = (new CustomerDemand())->where('customer_id', $id)->delete();
+        }
+        return true;
     }
 }

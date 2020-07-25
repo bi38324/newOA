@@ -15,9 +15,4 @@ class CustomerContact extends Model
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
-
-    public function customer_demand()
-    {
-        return $this->hasOne(CustomerDemand::class, 'id', 'customer_demand_id');
-    }
 }

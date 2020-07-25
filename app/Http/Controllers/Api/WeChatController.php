@@ -39,7 +39,6 @@ class WeChatController extends Controller
      */
     public function getWeChatInfo(Request $request)
     {
-        //$u = $this->service->getById(3);
         $code = $request->get('code');
         $wechatData = $this->wechatApi->getWechatInfo($code);
 

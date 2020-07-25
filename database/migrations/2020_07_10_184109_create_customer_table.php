@@ -42,7 +42,6 @@ class CreateCustomerTable extends Migration
         Schema::create('customer_contact', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
             $table->integer('customer_id')->comment('客户ID');
-            $table->integer('customer_demand_id')->comment('客户需求ID');
             $table->string('name')->comment('联系人名称');
             $table->string('phone')->comment('联系电话');
             $table->tinyInteger('is_first')->comment('是否是第一联系人 0：否 1：是')->default(0);
@@ -53,6 +52,15 @@ class CreateCustomerTable extends Migration
             $table->softDeletes();
         });
         DB::statement("ALTER TABLE `customer_contact` comment '客户联系人表'");
+
+        Schema::create('customer_contact_demand', function (Blueprint $table) {
+            $table->increments('id')->comment('主键id');
+            $table->integer('customer_id')->comment('客户ID');
+            $table->integer('customer_demand_id')->comment('需求ID');
+            $table->integer('customer_contact_id')->comment('联系人ID');
+            $table->timestamps();
+        });
+        DB::statement("ALTER TABLE `customer_contact_demand` comment '客户联系人需求关联中间表'");
 
         Schema::create('card_template', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
