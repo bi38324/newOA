@@ -34,13 +34,32 @@ class CustomerDemandController extends AdminController
         $grid = new Grid(new CustomerDemand());
         $admin = new Admin();
         $user = $admin->user();
+        if ($user->cannot('administrator') || $user->cannot('customer_manage')) {
+            $grid->model()->where('last_user_id', '=', $user->id());
+        }
         $grid->column('id', __('ID'));
         $grid->column('customer.title', __('客户名称'));
         $grid->column('demand', __('客户需求'));
+        $grid->column('owner_user.name', __('所属销售'));
+        $grid->column('last_user.name', __('跟进销售'));
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->equal('customer_id', '客户名称')->select(Customer::all()->pluck('title','id'));
+            $filter->equal('owner_user_id', '所属销售')->select(AdminUsers::all()->pluck('name','id'));
+            $filter->equal('last_user_id', '跟进销售')->select(AdminUsers::all()->pluck('name','id'));
         });
+        if ($user->cannot('administrator') || $user->cannot('customer_manage')) {
+            $grid->actions(function ($actions) {
+
+                // 去掉删除
+                $actions->disableDelete();
+
+                // 去掉编辑
+                $actions->disableEdit();
+            });
+            $grid->disableRowSelector();
+        }
+
         return $grid;
     }
 
@@ -53,7 +72,8 @@ class CustomerDemandController extends AdminController
     protected function detail($id)
     {
         $show = new Show(CustomerDemand::findOrFail($id));
-
+        $admin = new Admin();
+        $user = $admin->user();
         $show->field('id', __('ID'));
         $show->field('customer.title', __('客户名称'));
         $show->field('demand', __('客户需求'));
@@ -63,9 +83,16 @@ class CustomerDemandController extends AdminController
         $show->field('customer_contact.contact', __('联系人电话'))->as(function (){
             return $this->customer_contact->contact->phone;
         });
+        $show->field('owner_user.name', __('所属销售'));
+        $show->field('last_user.name', __('跟进销售'));
         $show->field('created_at', __('提交时间'));
         $show->field('updated_at', __('更新时间'));
-
+        if ($user->cannot('administrator') || $user->cannot('customer_manage')) {
+            $show->panel()
+                ->tools(function ($tools) {
+                    $tools->disableList();
+                });;
+        }
         return $show;
     }
 
@@ -84,15 +111,26 @@ class CustomerDemandController extends AdminController
         if($customer_id || $id){
             $form->select('customer_id', __('客户ID'))->options(Customer::all()->pluck('title', 'id'))->default($customer_id)->readOnly();
         }else{
-            if($user->isRole('administrator'))
-            {
-                $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand');
+            if ($user->can('administrator') || $user->can('customer_manage')) {
+                $user_id = '';
             } else {
-                $form->select('customer_id', __('客户名称'))->options(Customer::select('*')->where('last_user_id', $user->id)->get()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand');
+                $user_id = $user->id;
             }
+            $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_contact.customer_contact_id', '/admin/api/getCustomerContact?last_user_id='.$user_id);
         }
+        $form->select('customer_contact.customer_contact_id', __('联系人'))->options(CustomerContact::select('*')->where('customer_id', $customer_id)->where('last_user_id', $user->id)->get()->pluck('name', 'id'))->required();
         $form->textarea('demand', __('客户需求'))->required();
-        $form->select('customer_contact.customer_contact_id', __('联系人'))->options(CustomerContact::select('*')->where('customer_id', $customer_id)->get()->pluck('name', 'id'))->required();
+
+        $form->select('owner_user_id', __('所属销售'))->options(AdminUsers::all()->pluck('name','id'))->readOnly()->default($user->id);
+
+        if($user->isRole('administrator'))
+        {
+            $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->default($user->id);
+        } else {
+            $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->readOnly()->default($user->id);
+
+        }
+
         return $form;
     }
 
@@ -127,6 +165,39 @@ class CustomerDemandController extends AdminController
                 $contact_result = (new CustomerContactDemand())->create($customer_contact);
                 return redirect(admin_url('/customers/'.$params['customer_id']));
             }
+        }
+    }
+
+    //修改保存
+    public function update($id)
+    {
+        $params = request()->all();
+        $validator = Validator::make($params, [
+            'customer_id' => 'required',
+            'demand' => 'required',
+        ]);
+        if($validator->fails()) {
+            return redirect(admin_url('/customer-demands/create?customer_id='.$params['customer_id']))->withErrors($validator);
+        } else {
+            $demand = (new CustomerDemand())->where('id', $id)->firstOrFail();
+            if ($demand)
+            {
+                $result = $demand->update($params);
+                if ($result)
+                {
+                    // 修改联系人管理中的最近跟进人
+                    $contact_id = (new CustomerContactDemand())->getByContactId($params['customer_contact']['customer_contact_id']);
+                    if ($contact_id)
+                    {
+                        $contact = (new CustomerContact())->getById($contact_id['customer_contact_id']);
+                        if ($contact)
+                        {
+                            $res = $contact->update(['last_user_id' => $params['last_user_id']]);
+                        }
+                    }
+                }
+            }
+            return redirect(admin_url('/customers/'.$params['customer_id']));
         }
     }
 

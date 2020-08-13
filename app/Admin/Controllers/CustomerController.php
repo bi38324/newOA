@@ -50,8 +50,14 @@ class CustomerController extends AdminController
             $filter->disableIdFilter();
             $filter->like('title', '客户名称');
             $filter->equal('owner_user_id', '所属销售')->select(AdminUsers::all()->pluck('name','id'));
-            $filter->equal('last_user_id', '跟进销售')->select(AdminUsers::all()->pluck('name','id'));
         });
+        $grid->disableRowSelector();
+        $grid->actions(function ($actions) {
+
+            // 去掉删除
+            $actions->disableDelete();
+        });
+
         return $grid;
     }
 
@@ -73,7 +79,6 @@ class CustomerController extends AdminController
         $show->field('industry.IndustryName', __('所属行业'));
         $show->field('remark', __('备注'));
         $show->field('owner_user.name', __('所属销售'));
-        $show->field('last_user.name', __('跟进销售'));
 
         $show->panel()
             ->tools(function ($tools) {
@@ -134,18 +139,11 @@ class CustomerController extends AdminController
         $form->text('title', __('客户名称'))->required();
         $form->radio('type', __('客户类型'))->options([0 => '个人', 1 => '企业'])->required()->default(1);
         $form->text('address', __('公司地址'));
-        $form->radio('is_agent', __('是否代理'))->options([0 => '否', 1 => '是'])->required();
+        $form->radio('is_agent', __('是否代理'))->options([0 => '否', 1 => '是']);
         $form->select('channel_id', __('客户来源'))->options(Channel::selectOptions());
         $form->select('industry_id', __('所属行业'))->options(Industry::selectOptions());
         $form->textarea('remark', __('备注'));
         $form->select('owner_user_id', __('所属销售'))->options(AdminUsers::all()->pluck('name','id'))->readOnly()->default($user->id);
-        if($user->isRole('administrator'))
-        {
-            $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->default($user->id);
-        } else {
-            $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->readOnly()->default($user->id);
-
-        }
         return $form;
     }
 

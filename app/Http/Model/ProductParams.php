@@ -24,4 +24,9 @@ class ProductParams extends Model
     {
         return $this->where('product_id', $product_id)->get()->toArray();
     }
+
+    public function getByParams($params)
+    {
+        return $this->where('product_id', $params['product_id'])->where('params_id', $params['params_id'])->first();
+    }
 }

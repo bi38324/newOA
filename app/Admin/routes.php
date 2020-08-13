@@ -52,6 +52,11 @@ Route::group([
     $router->resource('orders', 'OrdersController');
     // 订单状态管理
     $router->resource('orders-statuses', 'OrdersStatusController');
+    // 订单续费管理
+    $router->resource('orders-renew-log', 'OrdersRenewLogController');
+    // 订单收款管理
+    $router->resource('order-payment-log', 'OrdersRenewLogController');
+
     // 订单详情管理
     $router->resource('orders-details', 'OrdersDetailController');
     // 订单日志
@@ -61,5 +66,7 @@ Route::group([
 
     // 根据客户ID获取客户跟单的接口
     $router->get('/api/getCustomerDemand', 'ApiController@getCustomerDemand');
+    // 根据客户ID和销售ID 获取客户联系人的接口
+    $router->get('/api/getCustomerContact', 'ApiController@getCustomerContact');
 
 });

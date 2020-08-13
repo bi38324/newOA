@@ -14,4 +14,9 @@ class CustomerContactDemand extends Model
     {
         return $this->hasOne(CustomerContact::class, 'id', 'customer_contact_id');
     }
+
+    public function getByContactId($contact_id)
+    {
+        return $this->where('customer_contact_id', $contact_id)->get()->toArray();
+    }
 }

@@ -24,7 +24,6 @@ class CreateCustomerTable extends Migration
             $table->string('website')->comment('网址')->nullable();
             $table->longText('remark')->comment('备注')->nullable();
             $table->integer('owner_user_id')->comment('所属销售')->nullable(false)->default(1);
-            $table->integer('last_user_id')->comment('最近跟进销售')->nullable(false)->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +33,8 @@ class CreateCustomerTable extends Migration
             $table->increments('id')->comment('主键id');
             $table->integer('customer_id')->comment('客户ID');
             $table->longText('demand')->comment('客户需求');
+            $table->integer('owner_user_id')->comment('所属销售')->nullable(false)->default(1);
+            $table->integer('last_user_id')->comment('最近跟进销售')->nullable(false)->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -48,6 +49,8 @@ class CreateCustomerTable extends Migration
             $table->string('open_id')->comment('微信openId')->nullable();
             $table->string('headImgUrl')->comment('头像')->nullable();
             $table->tinyInteger('sex')->comment('性别');
+            $table->integer('owner_user_id')->comment('所属销售')->nullable(false)->default(1);
+            $table->integer('last_user_id')->comment('最近跟进销售')->nullable(false)->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -149,19 +152,62 @@ class CreateCustomerTable extends Migration
             $table->longText('sales_remark')->comment('销售备注')->nullable();
             $table->longText('it_remark')->comment('技术备注')->nullable();
             $table->string('file_path')->comment('附件地址')->nullable();
-            $table->tinyInteger('status')->comment('订单状态 0：待开发 1：开发中 2:开发完成 3：已交付 4：已关闭')->default(0);
+            $table->string('contract_path')->comment('合同地址')->nullable();
+            $table->integer('last_user_id')->comment('最近跟进销售')->nullable(false)->default(1);
+            $table->tinyInteger('status')->comment('订单状态 0：待开发 1：开发中 2:开发完成 3：已交付')->default(0);
+            $table->tinyInteger('service_status')->comment('服务状态 0：服务未开始 1：服务中 2：服务到期')->default(0);
 
             $table->timestamps();
             $table->softDeletes();
         });
         DB::statement("ALTER TABLE `orders` comment '订单管理'");
 
+        Schema::create('orders_renew_log', function (Blueprint $table) {
+            $table->increments('id')->comment('主键id');
+            $table->integer('orders_id')->comment('订单ID');
+            $table->integer('product_id')->comment('产品ID');
+            $table->timestamp('start_time')->comment('开通时间')->nullable(true);
+            $table->timestamp('old_end_time')->comment('上次到期时间')->nullable(true);
+            $table->timestamp('end_time')->comment('当前结束时间');
+            $table->decimal('receivable')->comment('应收金额');
+            $table->decimal('receipts')->comment('实收金额')->nullable(true);
+            $table->decimal('arrears')->comment('未收金额')->nullable(true);
+            $table->tinyInteger('is_renew')->comment('是否续费 0：首次  1：续费')->nullable(true)->default(0);
+            $table->tinyInteger('is_tax')->comment('是否含税  0：不含税  1：含税')->nullable(true)->default(0);
+            $table->integer('owner_user_id')->comment('提交人')->nullable(false)->default(1);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        DB::statement("ALTER TABLE `orders_renew_log` comment '服务续费记录'");
+
+        Schema::create('pay_type', function (Blueprint $table) {
+            $table->increments('id')->comment('主键id');
+            $table->string('title')->comment('支付方式');
+            $table->string('number')->comment('支付账号');
+            $table->timestamps();
+        });
+        DB::statement("ALTER TABLE `pay_type` comment '付款方式管理'");
+
+        Schema::create('order_payment_log', function (Blueprint $table) {
+            $table->increments('id')->comment('主键id');
+            $table->integer('orders_renew_log_id')->comment('续费ID');
+            $table->decimal('receivable')->comment('应收金额');
+            $table->decimal('old_receipts')->comment('上次收款金额')->nullable(true);
+            $table->decimal('receipts')->comment('本次收款金额')->nullable(true);
+            $table->decimal('arrears')->comment('未收金额')->nullable(true);
+            $table->integer('pay_type_id')->comment('支付方式ID')->nullable(true);
+            $table->timestamp('pay_time')->comment('支付时间')->nullable(true);
+            $table->integer('admin_user_id')->comment('操作人')->nullable(false)->default(1);
+            $table->timestamps();
+        });
+        DB::statement("ALTER TABLE `order_payment_log` comment '缴费记录'");
+
         Schema::create('orders_status', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
             $table->integer('orders_id')->comment('客户ID');
             $table->tinyInteger('customer_status')->comment('客户状态 0：待处理  1:确认需求无误')->nullable()->default(0);
             $table->integer('customer_contact_id')->comment('客户联系人ID')->nullable()->default(0);
-            $table->tinyInteger('finance_status')->comment('财务认证 0：待处理  1:未收到款  2: 已收到款')->nullable()->default(0);
+            $table->tinyInteger('finance_status')->comment('财务认证 0：待处理  1:未收到款  2: 收到部分款  3：收到全款')->nullable()->default(0);
             $table->string('finance_remark')->comment('财务备注')->nullable();
             $table->integer('finance_user_id')->comment('财务审批人')->nullable();
             $table->tinyInteger('commerce_status')->comment('商务部认证 0：待处理  1：资料不完整 2：开发中 3：申请技术协助 4:开发完成')->nullable()->default(0);
@@ -173,6 +219,9 @@ class CreateCustomerTable extends Migration
             $table->tinyInteger('check_status')->comment('验收认证 0：待处理 1：不合格 2：验收通过')->nullable()->default(0);
             $table->string('check_remark')->comment('验收人备注')->nullable();
             $table->integer('check_user_id')->comment('验收操作人ID')->nullable();
+            $table->tinyInteger('customer_check_status')->comment('客户验收状态 0：待处理 1：修改问题 2：确认交付')->nullable()->default(0);
+            $table->string('customer_check_remark')->comment('客户验收人备注')->nullable();
+            $table->integer('customer_check_contact_id')->comment('客户验收人ID')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -214,6 +263,9 @@ class CreateCustomerTable extends Migration
             $table->tinyInteger('check_status')->comment('验收认证 0：待处理 1：不合格 2：验收通过')->nullable();
             $table->string('check_remark')->comment('验收人备注')->nullable();
             $table->integer('check_user_id')->comment('验收操作人ID')->nullable();
+            $table->tinyInteger('customer_check_status')->comment('客户验收状态 0：待处理 1：修改问题 2：确认交付')->nullable()->default(0);
+            $table->string('customer_check_remark')->comment('客户验收人备注')->nullable();
+            $table->integer('customer_check_contact_id')->comment('客户验收人ID')->nullable();
             $table->timestamps();
         });
         DB::statement("ALTER TABLE `orders_status_log` comment '订单状态日志表'");
@@ -230,6 +282,7 @@ class CreateCustomerTable extends Migration
         Schema::dropIfExists('customer');
         Schema::dropIfExists('customer_demand');
         Schema::dropIfExists('customer_contact');
+        Schema::dropIfExists('customer_contact_demand');
         Schema::dropIfExists('card_template');
         Schema::dropIfExists('customer_contact_card');
         Schema::dropIfExists('channel');
@@ -238,6 +291,9 @@ class CreateCustomerTable extends Migration
         Schema::dropIfExists('product_params');
         Schema::dropIfExists('params');
         Schema::dropIfExists('orders');
+        Schema::dropIfExists('orders_renew_log');
+        Schema::dropIfExists('pay_type');
+        Schema::dropIfExists('order_payment_log');
         Schema::dropIfExists('orders_status');
         Schema::dropIfExists('orders_detail');
         Schema::dropIfExists('orders_log');

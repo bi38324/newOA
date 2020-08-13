@@ -102,16 +102,25 @@ class ProductParamsController extends AdminController
         } else {
             $params_ids = $params['params_id'];
             unset($params['params_id']);
-            foreach($params_ids as $key => $value)
-            {
-                if( !empty($value))
+            if ($params['product_id']) {
+                foreach($params_ids as $key => $value)
                 {
-                    $product_params['product_id'] = $params['product_id'];
-                    $product_params['params_id'] = $value;
-                    $product_params_res =  (new ProductParams())->create($product_params);
+                    if( !empty($value))
+                    {
+                        $product_params['product_id'] = $params['product_id'];
+                        $product_params['params_id'] = $value;
+                        // 判断当前产品的这个参数是否存在
+                        $res = (new ProductParams())->getByParams($product_params);
+                        if ( empty($res))
+                        {
+                            $product_params_res =  (new ProductParams())->create($product_params);
+                        }
+                    }
                 }
+                return redirect(admin_url('/product-params'));
+            } else {
+                return redirect(admin_url('/product-params/create'));
             }
-            return redirect(admin_url('/product-params'));
         }
     }
 }

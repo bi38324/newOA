@@ -53,6 +53,11 @@ class Orders extends Model
         return $this->hasOne(CustomerDemand::class, 'id', 'customer_demand_id');
     }
 
+    public function orders_renew()
+    {
+        return $this->hasMany(OrdersRenewLog::class,'id','customer_id');
+    }
+
     public function getFileUrlAttribute()
     {
         $file_url = env('APP_URL').'upload/'.$this->file_path;
