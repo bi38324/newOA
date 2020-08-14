@@ -48,6 +48,8 @@ Route::group([
     $router->resource('product-params', 'ProductParamsController');
     // 参数管理
     $router->resource('params', 'ParamsController');
+    // 收款方式管理
+    $router->resource('pay-type', 'PayTypeController');
     // 订单管理
     $router->resource('orders', 'OrdersController');
     // 订单状态管理
@@ -55,7 +57,7 @@ Route::group([
     // 订单续费管理
     $router->resource('orders-renew-log', 'OrdersRenewLogController');
     // 订单收款管理
-    $router->resource('order-payment-log', 'OrdersRenewLogController');
+    $router->resource('order-payment-log', 'OrderPaymentLogController');
 
     // 订单详情管理
     $router->resource('orders-details', 'OrdersDetailController');

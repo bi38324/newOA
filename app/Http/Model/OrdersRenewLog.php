@@ -25,4 +25,14 @@ class OrdersRenewLog extends Model
     {
         return $this->belongsTo(AdminUsers::class, 'owner_user_id', 'id');
     }
+
+    public function orders_payment()
+    {
+        return $this->hasMany(OrderPaymentLog::class, 'orders_renew_log_id', 'id');
+    }
+
+    public function getById($id)
+    {
+        return $this->where('id', $id)->get()->toArray();
+    }
 }

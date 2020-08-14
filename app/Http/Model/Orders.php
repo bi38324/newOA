@@ -55,7 +55,7 @@ class Orders extends Model
 
     public function orders_renew()
     {
-        return $this->hasMany(OrdersRenewLog::class,'id','customer_id');
+        return $this->hasMany(OrdersRenewLog::class,'orders_id','id');
     }
 
     public function getFileUrlAttribute()
@@ -63,5 +63,10 @@ class Orders extends Model
         $file_url = env('APP_URL').'upload/'.$this->file_path;
 
         return $file_url;
+    }
+
+    public function getById($id)
+    {
+        return $this->where('id', $id)->get()->toArray();
     }
 }

@@ -13,4 +13,14 @@ class OrderPaymentLog extends Model
     {
         return $this->belongsTo(AdminUsers::class, 'admin_user_id', 'id');
     }
+
+    public function pay_type()
+    {
+        return $this->belongsTo(PayType::class, 'id', 'pay_type_id');
+    }
+
+    public function getLastInfo($orders_renew_log_id)
+    {
+        return $this->where('orders_renew_log_id', $orders_renew_log_id)->orderBy('created_at', 'desc')->first();
+    }
 }

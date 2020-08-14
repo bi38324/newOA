@@ -129,6 +129,14 @@ class OrdersController extends AdminController
             });
             $grid->disableRowSelector();
         }
+        $grid->actions(function ($actions) {
+            $apiUrl = '/admin/orders-renew-log/create?orders_id='.$actions->row->id;
+//            $actions->append("<div class='mb-5'><a class='grid-row-pass' data-id='{$actions->row->id}' title='续费'><i class='fa fa-paper-plane'></i></a></div>");
+            $actions->append("<div class='mb-5'><a class='grid-row-pass' data-id='{$actions->row->id}' href='{$apiUrl}' title='续费'>续费</a></div>");
+        });
+
+
+
         return $grid;
     }
 
@@ -176,19 +184,25 @@ class OrdersController extends AdminController
             $account->resource('/admin/orders-details');
             $account->column('id', 'ID');
             $account->column('product_params.title', '参数名称');
-            $account->column('value', '参数值')->editable();
+            $account->column('value', '参数值');
             $account->disableRowSelector();
             $account->disableColumnSelector();
             $account->disableExport();
             $account->disableFilter();
             $account->perPages([5, 10, 20, 30, 50,100]);
             $account->paginate(5);
-            $account->disableActions();
+//            $account->disableActions();
+            $account->actions(function ($actions) {
+                // 去掉删除
+                $actions->disableDelete();
+                $actions->disableView();
+            });
         });
 
         if ($user->can('administrator') || $user->can('finance')) {
             $show->orders_renew('订单续费管理', function ($account) use ($id) {
                 $account->resource('/admin/orders-renew-log');
+                $account->model()->orderBy('created_at', 'desc');
                 $account->column('id', 'ID');
                 $account->column('orders.order_code', __('订单号'));
                 $account->column('orders.customer_title', __('客户名称'));
@@ -213,6 +227,8 @@ class OrdersController extends AdminController
                     // 去掉删除
                     $actions->disableDelete();
                     $actions->disableEdit();
+                    $apiUrl = '/admin/order-payment-log/create?renew_log_id='.$actions->row->id;
+                    $actions->append("<div class='mb-5'><a class='grid-row-pass' data-id='{$actions->row->id}' href='{$apiUrl}' title='入账'>入账</a></div>");
                 });
             });
         }
@@ -260,10 +276,18 @@ class OrdersController extends AdminController
         } else {
             $user_id = $user->id;
         }
-        $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_contact_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id);
-        $form->select('customer_demand_id', __('客户需求'))->options(CustomerDemand::all()->pluck('demand', 'id'))->required();
-        $form->select('product_id', __('产品ID'))->options(Product::selectOptions())->required();
-        $form->datetime('start_time', __('开始时间'))->default(date('Y-m-d H:i:s'));
+        if ($id)
+        {
+            $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_contact_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id)->readOnly();
+            $form->select('customer_demand_id', __('客户需求'))->options(CustomerDemand::all()->pluck('demand', 'id'))->required()->readOnly();
+            $form->select('product_id', __('产品ID'))->options(Product::selectOptions())->required()->readOnly();
+            $form->datetime('start_time', __('开始时间'))->default(date('Y-m-d H:i:s'))->readonly();
+        } else {
+            $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_contact_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id);
+            $form->select('customer_demand_id', __('客户需求'))->options(CustomerDemand::all()->pluck('demand', 'id'))->required();
+            $form->select('product_id', __('产品ID'))->options(Product::selectOptions())->required();
+            $form->datetime('start_time', __('开始时间'))->default(date('Y-m-d H:i:s'));
+        }
         $form->datetime('end_time', __('结束时间'))->default(date('Y-m-d H:i:s'));
         $form->select('admin_user_id', __('所属销售'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
         $form->textarea('sales_remark', __('销售备注'));
@@ -463,9 +487,9 @@ class OrdersController extends AdminController
             if ($status_params['finance_status'] && $status_params['finance_status'] == 2)
             {
                 $order_params['status'] = 1;
-            }elseif ($status_params['check_status'] && $status_params['check_status'] == 2)
-            {
-                $order_params['status'] = 2;
+//            }elseif ($status_params['check_status'] && $status_params['check_status'] == 2)
+//            {
+//                $order_params['status'] = 2;
             }else {
                 $order_params['status'] = $parame['status'];
             }

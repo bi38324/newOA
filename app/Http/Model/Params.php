@@ -16,4 +16,9 @@ class Params extends Model
         return $this->whereIn('id', $ids)->get()->toArray();
     }
 
+    public function getById($id)
+    {
+        return $this->where('id', $id)->get()->toArray();
+    }
+
 }
