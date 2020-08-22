@@ -7,6 +7,7 @@ use App\Http\Model\Customer;
 use App\Http\Model\CustomerContact;
 use App\Http\Model\CustomerContactDemand;
 use App\Http\Model\CustomerDemand;
+use App\Http\Model\Orders;
 use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -34,8 +35,8 @@ class CustomerDemandController extends AdminController
         $grid = new Grid(new CustomerDemand());
         $admin = new Admin();
         $user = $admin->user();
-        if ($user->cannot('administrator') || $user->cannot('customer_manage')) {
-            $grid->model()->where('last_user_id', '=', $user->id());
+        if ($user->cannot('customer_manage')) {
+            $grid->model()->where('last_user_id', '=', $user->id);
         }
         $grid->column('id', __('ID'));
         $grid->column('customer.title', __('客户名称'));
@@ -48,7 +49,7 @@ class CustomerDemandController extends AdminController
             $filter->equal('owner_user_id', '所属销售')->select(AdminUsers::all()->pluck('name','id'));
             $filter->equal('last_user_id', '跟进销售')->select(AdminUsers::all()->pluck('name','id'));
         });
-        if ($user->cannot('administrator') || $user->cannot('customer_manage')) {
+        if ($user->cannot('customer_manage')) {
             $grid->actions(function ($actions) {
 
                 // 去掉删除
@@ -56,6 +57,12 @@ class CustomerDemandController extends AdminController
 
                 // 去掉编辑
                 $actions->disableEdit();
+            });
+            $grid->disableRowSelector();
+        } else {
+            $grid->actions(function ($actions) {
+                // 去掉删除
+                $actions->disableDelete();
             });
             $grid->disableRowSelector();
         }
@@ -107,27 +114,34 @@ class CustomerDemandController extends AdminController
         $form = new Form(new CustomerDemand());
         $admin = new Admin();
         $user = $admin->user();
-        $customer_id = \request('customer_id');
-        if($customer_id || $id){
+        $customer_id = '';
+        if ($user->cannot('customer_manage')) {
+            $user_id = $user->id;
+        } else {
+            $user_id = '';
+        }
+        if($id){
+            $customer_demand_info = (new CustomerDemand())->getById($id);
+            $customer_id = $customer_demand_info[0]['customer_id'];
             $form->select('customer_id', __('客户ID'))->options(Customer::all()->pluck('title', 'id'))->default($customer_id)->readOnly();
+
         }else{
-            if ($user->can('administrator') || $user->can('customer_manage')) {
-                $user_id = '';
-            } else {
-                $user_id = $user->id;
-            }
             $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_contact.customer_contact_id', '/admin/api/getCustomerContact?last_user_id='.$user_id);
         }
-        $form->select('customer_contact.customer_contact_id', __('联系人'))->options(CustomerContact::select('*')->where('customer_id', $customer_id)->where('last_user_id', $user->id)->get()->pluck('name', 'id'))->required();
+        if ($user->cannot('customer_manage')) {
+            $form->select('customer_contact.customer_contact_id', __('联系人'))->options(CustomerContact::select('*')->where('customer_id', $customer_id)->where('last_user_id', $user_id)->get()->pluck('name', 'id'))->required();
+        } else {
+            $form->select('customer_contact.customer_contact_id', __('联系人'))->options(CustomerContact::select('*')->where('customer_id', $customer_id)->get()->pluck('name', 'id'))->required();
+        }
         $form->textarea('demand', __('客户需求'))->required();
 
         $form->select('owner_user_id', __('所属销售'))->options(AdminUsers::all()->pluck('name','id'))->readOnly()->default($user->id);
 
-        if($user->isRole('administrator'))
+        if($user->cannot('customer_manage'))
         {
-            $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->default($user->id);
-        } else {
             $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->readOnly()->default($user->id);
+        } else {
+            $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->default($user->id);
 
         }
 
@@ -156,6 +170,8 @@ class CustomerDemandController extends AdminController
         } else {
             $customer_demand['customer_id'] = $params['customer_id'];
             $customer_demand['demand'] = $params['demand'];
+            $customer_demand['owner_user_id'] = $params['owner_user_id'];
+            $customer_demand['last_user_id'] = $params['last_user_id'];
             $demand_result = (new CustomerDemand())->create($customer_demand);
             if ($demand_result)
             {
@@ -182,17 +198,39 @@ class CustomerDemandController extends AdminController
             $demand = (new CustomerDemand())->where('id', $id)->firstOrFail();
             if ($demand)
             {
-                $result = $demand->update($params);
+                $customer_demand['customer_id'] = $params['customer_id'];
+                $customer_demand['demand'] = $params['demand'];
+                $customer_demand['owner_user_id'] = $params['owner_user_id'];
+                $customer_demand['last_user_id'] = $params['last_user_id'];
+                $result = $demand->update($customer_demand);
                 if ($result)
                 {
                     // 修改联系人管理中的最近跟进人
-                    $contact_id = (new CustomerContactDemand())->getByContactId($params['customer_contact']['customer_contact_id']);
+                    $contact_id = (new CustomerContactDemand())->getByDemand($id);
                     if ($contact_id)
                     {
-                        $contact = (new CustomerContact())->getById($contact_id['customer_contact_id']);
-                        if ($contact)
+                        $customer_contact['customer_contact_id'] = $params['customer_contact']['customer_contact_id'];
+                        $customer_contact['customer_id'] = $params['customer_id'];
+                        $customer_contact['customer_demand_id'] = $id;
+                        $re = $contact_id->update($customer_contact);
+                        if ($re)
                         {
-                            $res = $contact->update(['last_user_id' => $params['last_user_id']]);
+                            $contact = (new CustomerContact())->getById($contact_id['customer_contact_id']);
+                            if ($contact)
+                            {
+                                $res = $contact->update(['last_user_id' => $params['last_user_id']]);
+                            }
+                            // 修改对应订单的最近跟进人
+                            $order_list = (new Orders())->getByCustomerDemandId($id);
+                            $ids = [];
+                            if ($order_list)
+                            {
+                                foreach ($order_list as $value)
+                                {
+                                    $ids[] = $value['id'];
+                                }
+                                $orders_res = (new Orders())->updateByIds($ids, 'last_user_id', $params['last_user_id']);
+                            }
                         }
                     }
                 }

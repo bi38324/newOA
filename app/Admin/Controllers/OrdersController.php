@@ -44,15 +44,16 @@ class OrdersController extends AdminController
 
         if($user->isRole('sales'))
         {
-            $customer_ids = (new CustomerDemand())->getByLastUser($user->id);
-            if ($customer_ids)
-            {
-                foreach ($customer_ids as $value)
-                {
-                    $ids[] = $value['id'];
-                }
-            }
-            $grid->model()->where('customer_demand_id', 'in', $ids);
+//            $customer_ids = (new CustomerDemand())->getByLastUser($user->id);
+//            if ($customer_ids)
+//            {
+//                foreach ($customer_ids as $value)
+//                {
+//                    $ids[] = $value['id'];
+//                }
+//            }
+//            $grid->model()->where('customer_demand_id', 'in', $ids);
+            $grid->model()->where('last_user_id', '=', $user->id);
 //        } elseif($user->isRole('commerce'))
 //        {
 //            $grid->model()->where('status', '!=', 4);
@@ -122,14 +123,10 @@ class OrdersController extends AdminController
 
         // 去掉批量操作
         $grid->disableBatchActions();
-        if ($user->cannot('administrator') || $user->cannot('customer_manage')) {
-            $grid->actions(function ($actions) {
-                // 去掉删除
-                $actions->disableDelete();
-            });
-            $grid->disableRowSelector();
-        }
+        $grid->disableRowSelector();
         $grid->actions(function ($actions) {
+            $actions->disableDelete();
+
             $apiUrl = '/admin/orders-renew-log/create?orders_id='.$actions->row->id;
 //            $actions->append("<div class='mb-5'><a class='grid-row-pass' data-id='{$actions->row->id}' title='续费'><i class='fa fa-paper-plane'></i></a></div>");
             $actions->append("<div class='mb-5'><a class='grid-row-pass' data-id='{$actions->row->id}' href='{$apiUrl}' title='续费'>续费</a></div>");
@@ -271,19 +268,19 @@ class OrdersController extends AdminController
         $form = new Form(new Orders());
         $admin = new Admin();
         $user = $admin->user();
-        if ($user->can('administrator') || $user->can('customer_manage')) {
-            $user_id = '';
-        } else {
+        if ($user->cannot('customer_manage')) {
             $user_id = $user->id;
+        } else {
+            $user_id = '';
         }
         if ($id)
         {
-            $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_contact_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id)->readOnly();
+            $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id)->readOnly();
             $form->select('customer_demand_id', __('客户需求'))->options(CustomerDemand::all()->pluck('demand', 'id'))->required()->readOnly();
             $form->select('product_id', __('产品ID'))->options(Product::selectOptions())->required()->readOnly();
             $form->datetime('start_time', __('开始时间'))->default(date('Y-m-d H:i:s'))->readonly();
         } else {
-            $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_contact_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id);
+            $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id);
             $form->select('customer_demand_id', __('客户需求'))->options(CustomerDemand::all()->pluck('demand', 'id'))->required();
             $form->select('product_id', __('产品ID'))->options(Product::selectOptions())->required();
             $form->datetime('start_time', __('开始时间'))->default(date('Y-m-d H:i:s'));
@@ -376,6 +373,7 @@ class OrdersController extends AdminController
                     $params['contract_path'] = $contract_paths;
                 }
                 $params['customer_title'] = $customer->title;
+                $params['last_user_id'] = $params['admin_user_id'];
                 $result = (new Orders())->create($params);
                 if ($result)
                 {

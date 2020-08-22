@@ -1,0 +1,95 @@
+body {
+    background-color: #eee;
+}
+#myTab{
+    position: fixed;
+    top: 0rem;
+}
+#mytab-content2{
+    margin-top: 7rem;
+}
+#myTab a{
+    color: #000 ;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #337ab7 !important;
+    cursor: default;
+    background-color: #fff;
+    /* border: 1px solid #ddd; */
+    /* border-bottom-color: red; */
+    border-bottom: .7rem solid red;
+}
+
+
+#myTab {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+#myTab li a {
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+#mytab-content2 {
+    width: 100%;
+}
+
+/* #mytab-content2 .fade{
+    background-color: bisque;
+    width: 100%;
+} */
+
+.first-common {
+    background-color: #fff;
+    width: 100%;
+    padding: 4rem;
+    margin-top: 3rem;
+}
+
+.first-top {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.first-top p {
+    font-size: 3rem;
+    color: #999;
+}
+
+.first-top b {
+    font-size: 3rem;
+    color: red;
+}
+
+.first-center p {
+    font-size: 2.8rem;
+    margin-top: 2rem;
+}
+
+.first-center-money {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.first-center-money p {
+    font-weight: 700;
+}
+
+.first-center-money a {
+    font-size: 2.5rem;
+    color: #999;
+    text-decoration: none;
+}
+
+.first-center-bottom {
+    margin-top: 2rem;
+}
+
+.first-center-bottom p {
+    text-align: right;
+}

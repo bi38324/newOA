@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/order_info', function () {
-    return view('orders.info');
+Route::get('/orders_confirm', function () {
+    return view('orders.confirm');
+});
+
+Route::get('/orders_list', function () {
+    return view('orders.list');
 });

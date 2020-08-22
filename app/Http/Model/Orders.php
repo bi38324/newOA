@@ -69,4 +69,22 @@ class Orders extends Model
     {
         return $this->where('id', $id)->get()->toArray();
     }
+
+    public function getByCustomerDemandId($customer_demand_id)
+    {
+        return $this->where('customer_demand_id', $customer_demand_id)->get()->toArray();
+    }
+
+    public function updateByIds($ids, $params, $params_value)
+    {
+        foreach ($ids as $key => $value)
+        {
+            $orders = $this->where('id', $value)->firstOrFail();
+            if ($orders)
+            {
+                $orders->update([$params => $params_value]);
+            }
+        }
+        return true;
+    }
 }

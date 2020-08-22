@@ -34,12 +34,8 @@ class CustomerContactController extends AdminController
         $grid = new Grid(new CustomerContact());
         $admin = new Admin();
         $user = $admin->user();
-        if($user->isRole('sales'))
-        {
-            $grid->model()->whereHas('admin_user_id', '=', $user->id);
-        } elseif($user->isRole('commerce'))
-        {
-            $grid->model()->where('status', '!=', 4);
+        if ($user->cannot('customer_manage')) {
+            $grid->model()->where('last_user_id', '=', $user->id);
         }
         $grid->column('id', __('Id'));
         $grid->column('customer.title', __('客户名称'));
@@ -57,6 +53,8 @@ class CustomerContactController extends AdminController
             // 去掉编辑
             $actions->disableEdit();
         });
+
+        $grid->disableRowSelector();
 
         return $grid;
     }
@@ -78,6 +76,11 @@ class CustomerContactController extends AdminController
         $show->field('headImgUrl', __('头像'))->image();
         $show->field('sex', __('性别'))->using([0 => '男', 1 => '女']);
 
+        $show->panel()
+            ->tools(function ($tools) {
+                $tools->disableEdit();
+                $tools->disableDelete();
+            });
         return $show;
     }
 
@@ -103,24 +106,28 @@ class CustomerContactController extends AdminController
         $admin = new Admin();
         $user = $admin->user();
         $customer_id = \request('customer_id');
-
+        if ($user->can('administrator') || $user->can('customer_manage')) {
+            $user_id = '';
+        } else {
+            $user_id = $user->id;
+        }
         if ($id || $customer_id)
         {
             $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->default($customer_id)->required()->readOnly();
         } else {
-            if($user->isRole('administrator'))
-            {
-                $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand');
-            } else {
-                $form->select('customer_id', __('客户名称'))->options(Customer::select('*')->where('last_user_id', $user->id)->get()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand');
-            }
+            $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id);
         }
         $form->text('name', __('联系人姓名'))->required();
         $form->text('phone', __('联系电话'))->required();
         $form->radio('is_first', __('是否为第一联系人'))->options([0 => '否', 1 => '是'])->required();
         $form->radio('sex', __('性别'))->options([0 => '男', 1 => '女'])->required();
         $form->select('owner_user_id', __('所属销售'))->options(AdminUsers::all()->pluck('name','id'))->readOnly()->default($user->id);
-        $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->default($user->id);
+//        if ($user->can('customer_manage'))
+//        {
+//            $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->default($user->id);
+//        } else {
+            $form->select('last_user_id', __('跟进销售'))->options(AdminUsers::all()->pluck('name','id'))->readOnly()->default($user->id);
+//        }
 
         return $form;
     }
@@ -139,6 +146,13 @@ class CustomerContactController extends AdminController
         if($validator->fails()) {
             return redirect(admin_url('/customer-contacts/create?customer_id='.$params['customer_id']))->withErrors($validator);
         } else {
+//            // 查询当前联系人是否已经存在
+//            $customer_contact = (new CustomerContact())->getByName($params['customer_id'], $params['name'], $params['phone']);
+//            if ($customer_contact)
+//            {
+//                // 判断近两个月有没有新增需求
+//                $customer_contact->id;
+//            }
             $demand_result = (new CustomerContact())->create($params);
             return redirect(admin_url('/customers/'.$params['customer_id']));
         }

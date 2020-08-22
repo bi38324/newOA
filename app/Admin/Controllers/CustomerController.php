@@ -34,10 +34,7 @@ class CustomerController extends AdminController
         $grid = new Grid(new Customer());
         $admin = new Admin();
         $user = $admin->user();
-        if($user->isRole('sales'))
-        {
-            $grid->model()->where('owner_user_id', '=', $user->id);
-        }
+
         $grid->column('id', __('客户ID'));
         $grid->column('title', __('公司名称'));
         $grid->column('address', __('公司地址'));
@@ -52,11 +49,18 @@ class CustomerController extends AdminController
             $filter->equal('owner_user_id', '所属销售')->select(AdminUsers::all()->pluck('name','id'));
         });
         $grid->disableRowSelector();
-        $grid->actions(function ($actions) {
-
-            // 去掉删除
-            $actions->disableDelete();
-        });
+        if($user->cannot('customer_manage'))
+        {
+            $grid->actions(function ($actions) {
+                $actions->disableEdit();
+                $actions->disableDelete();
+            });
+        } else {
+            $grid->actions(function ($actions) {
+                // 去掉删除
+                $actions->disableDelete();
+            });
+        }
 
         return $grid;
     }
@@ -84,24 +88,50 @@ class CustomerController extends AdminController
             ->tools(function ($tools) {
                 $tools->disableEdit();
                 $tools->disableDelete();
-            });;
+            });
 
         $show->customer_demand('客户需求管理', function ($account) use ($id) {
+            $admin = new Admin();
+            $user = $admin->user();
             $account->resource('/admin/customer-demands');
+            if ($user->cannot('customer_manage')) {
+                $account->model()->where('last_user_id', '=', $user->id);
+            }
             $account->column('id', 'ID');
             $account->column('customer.title', __('客户名称'));
             $account->column('demand', __('客户需求'));
-            $account->column('customer_contact.contact', __('联系人'));
+//            $account->column('customer_contact.customer_contact_id', __('联系人'));
+
             $account->disableRowSelector();
             $account->disableColumnSelector();
             $account->disableExport();
             $account->disableFilter();
             $account->perPages([5, 10, 20, 30, 50,100]);
             $account->paginate(5);
+            if ($user->cannot('customer_manage')) {
+                $account->actions(function ($actions) {
+                    // 去掉删除
+                    $actions->disableDelete();
+                    // 去掉编辑
+                    $actions->disableEdit();
+                    $actions->disableView();
+                });
+            } else {
+                $account->actions(function ($actions) {
+                    // 去掉删除
+                    $actions->disableDelete();
+                    $actions->disableView();
+                });
+            }
         });
 
         $show->customer_contact('联系人管理', function ($account) use ($id) {
+            $admin = new Admin();
+            $user = $admin->user();
             $account->resource('/admin/customer-contacts');
+            if ($user->cannot('customer_manage')) {
+                $account->model()->where('last_user_id', '=', $user->id);
+            }
             $account->column('id', 'ID');
             $account->column('name', '联系人姓名');
             $account->column('phone', '联系人电话');
@@ -115,10 +145,19 @@ class CustomerController extends AdminController
             $account->disableFilter();
             $account->perPages([5, 10, 20, 30, 50,100]);
             $account->paginate(5);
-//            $account->actions(function($action) {
-//                $action->disableView();
-//                $action->disableDelete();
-//            });
+            if ($user->cannot('customer_manage')) {
+                $account->actions(function ($actions) {
+                    // 去掉删除
+                    $actions->disableDelete();
+                    // 去掉编辑
+                    $actions->disableEdit();
+                });
+            } else {
+                $account->actions(function ($actions) {
+                    // 去掉删除
+                    $actions->disableDelete();
+                });
+            }
         });
 
         return $show;

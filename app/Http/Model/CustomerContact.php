@@ -28,6 +28,11 @@ class CustomerContact extends Model
 
     public function getById($contact_id)
     {
-        return $this->where('id', $contact_id)->find();
+        return $this->where('id', $contact_id)->first();
+    }
+
+    public function getByName($customer_id, $name, $phone)
+    {
+        return $this->where('customer_id', $customer_id)->where('name', 'like', '%'.$name.'%')->where('phone', 'like', '%'.$phone.'%')->first();
     }
 }

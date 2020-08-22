@@ -45,4 +45,9 @@ class CustomerDemand extends Model
     {
         return $this->where('last_user_id', $last_user_id)->get()->toArray();
     }
+
+    public function getById($id)
+    {
+        return $this->where('id', $id)->get()->toArray();
+    }
 }
