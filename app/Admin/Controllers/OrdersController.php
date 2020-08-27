@@ -302,37 +302,37 @@ class OrdersController extends AdminController
         {
             if($user->isRole('commerce'))
             {
-                $form->select('commerce_status', __('商务部状态'))->options([0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
-                $form->textarea('commerce_remark', __('商务部备注'));
-                $form->select('commerce_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
+                $form->select('orders_status.commerce_status', __('商务部状态'))->options([0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
+                $form->textarea('orders_status.commerce_remark', __('商务部备注'));
+                $form->select('orders_status.commerce_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
             } elseif($user->isRole('finance'))
             {
-                $form->select('finance_status', __('财务状态'))->options([0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
-                $form->textarea('finance_remark', __('财务备注'));
-                $form->select('finance_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
+                $form->select('orders_status.finance_status', __('财务状态'))->options([0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
+                $form->textarea('orders_status.finance_remark', __('财务备注'));
+                $form->select('orders_status.finance_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
             } elseif($user->isRole('it'))
             {
-                $form->select('it_status', __('技术状态'))->options([0 => '待处理', 1 => '处理中', 2 => '处理完成']);
-                $form->textarea('it_remark', __('技术备注'));
-                $form->select('it_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
+                $form->select('orders_status.it_status', __('技术状态'))->options([0 => '待处理', 1 => '处理中', 2 => '处理完成']);
+                $form->textarea('orders_status.it_remark', __('技术备注'));
+                $form->select('orders_status.it_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
             } elseif($user->isRole('check')){
-                $form->select('check_status', __('验收状态'))->options([0 => '待处理', 1 => '不合格', 2 => '验收通过']);
-                $form->textarea('check_remark', __('验收备注'));
-                $form->select('check_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
+                $form->select('orders_status.check_status', __('验收状态'))->options([0 => '待处理', 1 => '不合格', 2 => '验收通过']);
+                $form->textarea('orders_status.check_remark', __('验收备注'));
+                $form->select('orders_status.check_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
             }else {
-                $form->textarea('sales_remark', __('销售备注'));
-                $form->select('commerce_status', __('商务部状态'))->options([0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
-                $form->textarea('commerce_remark', __('商务部备注'));
-                $form->select('commerce_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
-                $form->select('finance_status', __('财务状态'))->options([0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
-                $form->textarea('finance_remark', __('财务备注'));
-                $form->select('finance_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
-                $form->select('it_status', __('技术状态'))->options([0 => '待处理', 1 => '处理中', 2 => '处理完成']);
-                $form->textarea('it_remark', __('技术备注'));
-                $form->select('it_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
-                $form->select('check_status', __('验收状态'))->options([0 => '待处理', 1 => '不合格', 2 => '验收通过']);
-                $form->textarea('check_remark', __('验收备注'));
-                $form->select('check_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
+                $form->textarea('orders_status.sales_remark', __('销售备注'));
+                $form->select('orders_status.commerce_status', __('商务部状态'))->options([0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
+                $form->textarea('orders_status.commerce_remark', __('商务部备注'));
+                $form->select('orders_status.commerce_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
+                $form->select('orders_status.finance_status', __('财务状态'))->options([0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
+                $form->textarea('orders_status.finance_remark', __('财务备注'));
+                $form->select('orders_status.finance_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
+                $form->select('orders_status.it_status', __('技术状态'))->options([0 => '待处理', 1 => '处理中', 2 => '处理完成']);
+                $form->textarea('orders_status.it_remark', __('技术备注'));
+                $form->select('orders_status.it_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
+                $form->select('orders_status.check_status', __('验收状态'))->options([0 => '待处理', 1 => '不合格', 2 => '验收通过']);
+                $form->textarea('orders_status.check_remark', __('验收备注'));
+                $form->select('orders_status.check_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
             }
         }
 
@@ -347,6 +347,7 @@ class OrdersController extends AdminController
             'customer_id' => 'required',
             'customer_demand_id' => 'required'
         ]);
+        dd($params);
         $file = request()->file('file_path');
         $contract_path = request()->file('contract_path');
         if ($file)
@@ -411,6 +412,7 @@ class OrdersController extends AdminController
         {
             $params['file_path'] = $file;
         }
+        dd($parame);
         if(isset($parame['_editable']))
         {
             $param = explode('.', $parame['name']);

@@ -165,6 +165,160 @@
         ]
     },
     {
+        "name": "dingo/api",
+        "version": "v3.0.0",
+        "version_normalized": "3.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dingo/api.git",
+            "reference": "42c5b78d010fbd97dc73aa01b259f05b1f033ce6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dingo/api/zipball/42c5b78d010fbd97dc73aa01b259f05b1f033ce6",
+            "reference": "42c5b78d010fbd97dc73aa01b259f05b1f033ce6",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "dingo/blueprint": "^0.4",
+            "illuminate/routing": "^7.0",
+            "illuminate/support": "^7.0",
+            "league/fractal": "^0.19",
+            "php": "^7.2.5"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "~2",
+            "illuminate/auth": "^7.0",
+            "illuminate/cache": "^7.0",
+            "illuminate/console": "^7.0",
+            "illuminate/database": "^7.0",
+            "illuminate/events": "^7.0",
+            "illuminate/filesystem": "^7.0",
+            "illuminate/log": "^7.0",
+            "illuminate/pagination": "^7.0",
+            "laravel/lumen-framework": "^7.0",
+            "mockery/mockery": "~1.0",
+            "phpdocumentor/reflection-docblock": "3.3.2",
+            "phpunit/phpunit": "^8.5",
+            "squizlabs/php_codesniffer": "~2.0",
+            "tymon/jwt-auth": "1.0.*"
+        },
+        "suggest": {
+            "tymon/jwt-auth": "Protect your API with JSON Web Tokens."
+        },
+        "time": "2020-03-23T00:19:41+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            },
+            "laravel": {
+                "providers": [
+                    "Dingo\\Api\\Provider\\LaravelServiceProvider"
+                ],
+                "aliases": {
+                    "API": "Dingo\\Api\\Facade\\API"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Dingo\\Api\\": "src/"
+            },
+            "files": [
+                "src/helpers.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Jason Lewis",
+                "email": "jason.lewis1991@gmail.com"
+            }
+        ],
+        "description": "A RESTful API package for the Laravel and Lumen frameworks.",
+        "keywords": [
+            "api",
+            "dingo",
+            "laravel",
+            "restful"
+        ]
+    },
+    {
+        "name": "dingo/blueprint",
+        "version": "v0.4.1",
+        "version_normalized": "0.4.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dingo/blueprint.git",
+            "reference": "a84221e01683957d19c9217fb6133f2a039081a3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dingo/blueprint/zipball/a84221e01683957d19c9217fb6133f2a039081a3",
+            "reference": "a84221e01683957d19c9217fb6133f2a039081a3",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "doctrine/annotations": "~1.2",
+            "illuminate/filesystem": "^7.0",
+            "illuminate/support": "^7.0",
+            "php": "^7.2.5",
+            "phpdocumentor/reflection-docblock": "^3.1 || ^4.1 || ^5"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^6.5",
+            "squizlabs/php_codesniffer": "~2.0"
+        },
+        "time": "2020-03-14T07:33:47+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Dingo\\Blueprint\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Jason Lewis",
+                "email": "jason.lewis1991@gmail.com"
+            }
+        ],
+        "description": "API Blueprint documentation generator.",
+        "keywords": [
+            "api",
+            "blueprint",
+            "dingo",
+            "docs",
+            "laravel"
+        ]
+    },
+    {
         "name": "dnoegel/php-xdg-base-dir",
         "version": "v0.1.1",
         "version_normalized": "0.1.1.0",
@@ -204,6 +358,84 @@
             "MIT"
         ],
         "description": "implementation of xdg base directory specification for php"
+    },
+    {
+        "name": "doctrine/annotations",
+        "version": "1.10.4",
+        "version_normalized": "1.10.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/doctrine/annotations.git",
+            "reference": "bfe91e31984e2ba76df1c1339681770401ec262f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/doctrine/annotations/zipball/bfe91e31984e2ba76df1c1339681770401ec262f",
+            "reference": "bfe91e31984e2ba76df1c1339681770401ec262f",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "doctrine/lexer": "1.*",
+            "ext-tokenizer": "*",
+            "php": "^7.1 || ^8.0"
+        },
+        "require-dev": {
+            "doctrine/cache": "1.*",
+            "phpstan/phpstan": "^0.12.20",
+            "phpunit/phpunit": "^7.5 || ^9.1.5"
+        },
+        "time": "2020-08-10T19:35:50+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.9.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Guilherme Blanco",
+                "email": "guilhermeblanco@gmail.com"
+            },
+            {
+                "name": "Roman Borschel",
+                "email": "roman@code-factory.org"
+            },
+            {
+                "name": "Benjamin Eberlei",
+                "email": "kontakt@beberlei.de"
+            },
+            {
+                "name": "Jonathan Wage",
+                "email": "jonwage@gmail.com"
+            },
+            {
+                "name": "Johannes Schmitt",
+                "email": "schmittjoh@gmail.com"
+            }
+        ],
+        "description": "Docblock Annotations Parser",
+        "homepage": "http://www.doctrine-project.org",
+        "keywords": [
+            "annotations",
+            "docblock",
+            "parser"
+        ]
     },
     {
         "name": "doctrine/cache",
@@ -761,6 +993,58 @@
             "cron",
             "schedule"
         ]
+    },
+    {
+        "name": "easywechat-composer/easywechat-composer",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mingyoung/easywechat-composer.git",
+            "reference": "93cfce1ec842b9a5b1b0791a52afd18b833f114a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mingyoung/easywechat-composer/zipball/93cfce1ec842b9a5b1b0791a52afd18b833f114a",
+            "reference": "93cfce1ec842b9a5b1b0791a52afd18b833f114a",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "composer-plugin-api": "^1.0 || ^2.0",
+            "php": ">=7.0"
+        },
+        "require-dev": {
+            "composer/composer": "^1.0 || ^2.0",
+            "phpunit/phpunit": "^6.5 || ^7.0"
+        },
+        "time": "2020-07-23T11:06:47+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "EasyWeChatComposer\\Plugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "EasyWeChatComposer\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "张铭阳",
+                "email": "mingyoungcheung@gmail.com"
+            }
+        ],
+        "description": "The composer plugin for EasyWeChat"
     },
     {
         "name": "egulias/email-validator",
@@ -2038,6 +2322,78 @@
         ]
     },
     {
+        "name": "league/fractal",
+        "version": "0.19.2",
+        "version_normalized": "0.19.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/fractal.git",
+            "reference": "06dc15f6ba38f2dde2f919d3095d13b571190a7c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/fractal/zipball/06dc15f6ba38f2dde2f919d3095d13b571190a7c",
+            "reference": "06dc15f6ba38f2dde2f919d3095d13b571190a7c",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.4"
+        },
+        "require-dev": {
+            "doctrine/orm": "^2.5",
+            "illuminate/contracts": "~5.0",
+            "mockery/mockery": "~0.9",
+            "pagerfanta/pagerfanta": "~1.0.0",
+            "phpunit/phpunit": "^4.8.35 || ^7.5",
+            "squizlabs/php_codesniffer": "~1.5|~2.0|~3.4",
+            "zendframework/zend-paginator": "~2.3"
+        },
+        "suggest": {
+            "illuminate/pagination": "The Illuminate Pagination component.",
+            "pagerfanta/pagerfanta": "Pagerfanta Paginator",
+            "zendframework/zend-paginator": "Zend Framework Paginator"
+        },
+        "time": "2020-01-24T23:17:29+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.13-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "League\\Fractal\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Phil Sturgeon",
+                "email": "me@philsturgeon.uk",
+                "homepage": "http://philsturgeon.uk/",
+                "role": "Developer"
+            }
+        ],
+        "description": "Handle the output of complex data structures ready for API output.",
+        "homepage": "http://fractal.thephpleague.com/",
+        "keywords": [
+            "api",
+            "json",
+            "league",
+            "rest"
+        ]
+    },
+    {
         "name": "mockery/mockery",
         "version": "1.3.2",
         "version_normalized": "1.3.2.0",
@@ -2612,6 +2968,204 @@
             "laravel",
             "locale",
             "overtrue"
+        ]
+    },
+    {
+        "name": "overtrue/laravel-wechat",
+        "version": "5.0.7",
+        "version_normalized": "5.0.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/overtrue/laravel-wechat.git",
+            "reference": "feb3eca83910dac425390aaabcd89896686b9c34"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/overtrue/laravel-wechat/zipball/feb3eca83910dac425390aaabcd89896686b9c34",
+            "reference": "feb3eca83910dac425390aaabcd89896686b9c34",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "illuminate/container": "^5.1 || ^6.0 || ^7.0",
+            "overtrue/wechat": "^4.0"
+        },
+        "time": "2020-07-28T04:23:13+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Overtrue\\LaravelWeChat\\ServiceProvider"
+                ],
+                "aliases": {
+                    "EasyWeChat": "Overtrue\\LaravelWeChat\\Facade"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Overtrue\\LaravelWeChat\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "overtrue",
+                "email": "anzhengchao@gmail.com"
+            }
+        ],
+        "description": "微信 SDK for Laravel",
+        "keywords": [
+            "laravel",
+            "sdk",
+            "wechat",
+            "weixin"
+        ]
+    },
+    {
+        "name": "overtrue/socialite",
+        "version": "2.0.16",
+        "version_normalized": "2.0.16.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/overtrue/socialite.git",
+            "reference": "bbcd8ffd2e1f3aa7c4d5298c56c6d73803aa3067"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/overtrue/socialite/zipball/bbcd8ffd2e1f3aa7c4d5298c56c6d73803aa3067",
+            "reference": "bbcd8ffd2e1f3aa7c4d5298c56c6d73803aa3067",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "ext-json": "*",
+            "guzzlehttp/guzzle": "~5.0|~6.0",
+            "php": ">=7.0",
+            "symfony/http-foundation": "^2.7|^3.0|^4.0|^5.0"
+        },
+        "conflict": {
+            "socialiteproviders/weixin": "*"
+        },
+        "require-dev": {
+            "mockery/mockery": "~1.2",
+            "phpunit/phpunit": "~6"
+        },
+        "time": "2020-03-04T15:22:25+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Overtrue\\Socialite\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "overtrue",
+                "email": "anzhengchao@gmail.com"
+            }
+        ],
+        "description": "A collection of OAuth 2 packages that extracts from laravel/socialite.",
+        "keywords": [
+            "login",
+            "oauth",
+            "qq",
+            "social",
+            "wechat",
+            "weibo"
+        ]
+    },
+    {
+        "name": "overtrue/wechat",
+        "version": "4.2.33",
+        "version_normalized": "4.2.33.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/overtrue/wechat.git",
+            "reference": "80dbb941a3a607adf42948b8b6da58f26de5ca7e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/overtrue/wechat/zipball/80dbb941a3a607adf42948b8b6da58f26de5ca7e",
+            "reference": "80dbb941a3a607adf42948b8b6da58f26de5ca7e",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "easywechat-composer/easywechat-composer": "^1.1",
+            "ext-fileinfo": "*",
+            "ext-openssl": "*",
+            "ext-simplexml": "*",
+            "guzzlehttp/guzzle": "^6.2 || ^7.0",
+            "monolog/monolog": "^1.22 || ^2.0",
+            "overtrue/socialite": "~2.0",
+            "php": ">=7.2",
+            "pimple/pimple": "^3.0",
+            "psr/simple-cache": "^1.0",
+            "symfony/cache": "^3.3 || ^4.3 || ^5.0",
+            "symfony/event-dispatcher": "^4.3 || ^5.0",
+            "symfony/http-foundation": "^2.7 || ^3.0 || ^4.0 || ^5.0",
+            "symfony/psr-http-message-bridge": "^0.3 || ^1.0 || ^2.0"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2.15",
+            "mikey179/vfsstream": "^1.6",
+            "mockery/mockery": "^1.2.3",
+            "phpstan/phpstan": "^0.12.0",
+            "phpunit/phpunit": "^7.5"
+        },
+        "time": "2020-08-17T08:12:35+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "EasyWeChat\\": "src/"
+            },
+            "files": [
+                "src/Kernel/Support/Helpers.php",
+                "src/Kernel/Helpers.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "overtrue",
+                "email": "anzhengchao@gmail.com"
+            }
+        ],
+        "description": "微信SDK",
+        "keywords": [
+            "easywechat",
+            "sdk",
+            "wechat",
+            "weixin",
+            "weixin-sdk"
         ]
     },
     {
@@ -3327,7 +3881,8 @@
         "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
         "keywords": [
             "tokenizer"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "phpunit/phpunit",
@@ -3418,6 +3973,118 @@
             "phpunit",
             "testing",
             "xunit"
+        ]
+    },
+    {
+        "name": "pimple/pimple",
+        "version": "v3.3.0",
+        "version_normalized": "3.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silexphp/Pimple.git",
+            "reference": "e55d12f9d6a0e7f9c85992b73df1267f46279930"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silexphp/Pimple/zipball/e55d12f9d6a0e7f9c85992b73df1267f46279930",
+            "reference": "e55d12f9d6a0e7f9c85992b73df1267f46279930",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": "^7.2.5",
+            "psr/container": "^1.0"
+        },
+        "require-dev": {
+            "symfony/phpunit-bridge": "^3.4|^4.4|^5.0"
+        },
+        "time": "2020-03-03T09:12:48+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Pimple": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Pimple, a simple Dependency Injection Container",
+        "homepage": "https://pimple.symfony.com",
+        "keywords": [
+            "container",
+            "dependency injection"
+        ]
+    },
+    {
+        "name": "psr/cache",
+        "version": "1.0.1",
+        "version_normalized": "1.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/cache.git",
+            "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
+            "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-08-06T20:24:11+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Cache\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for caching libraries",
+        "keywords": [
+            "cache",
+            "psr",
+            "psr-6"
         ]
     },
     {
@@ -4842,6 +5509,164 @@
             "email",
             "mail",
             "mailer"
+        ]
+    },
+    {
+        "name": "symfony/cache",
+        "version": "v5.1.3",
+        "version_normalized": "5.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/cache.git",
+            "reference": "a9ac09a5e9786b734a4baa98158c2cd3251f1e4c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/cache/zipball/a9ac09a5e9786b734a4baa98158c2cd3251f1e4c",
+            "reference": "a9ac09a5e9786b734a4baa98158c2cd3251f1e4c",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.2.5",
+            "psr/cache": "~1.0",
+            "psr/log": "~1.0",
+            "symfony/cache-contracts": "^1.1.7|^2",
+            "symfony/polyfill-php80": "^1.15",
+            "symfony/service-contracts": "^1.1|^2",
+            "symfony/var-exporter": "^4.4|^5.0"
+        },
+        "conflict": {
+            "doctrine/dbal": "<2.5",
+            "symfony/dependency-injection": "<4.4",
+            "symfony/http-kernel": "<4.4",
+            "symfony/var-dumper": "<4.4"
+        },
+        "provide": {
+            "psr/cache-implementation": "1.0",
+            "psr/simple-cache-implementation": "1.0",
+            "symfony/cache-implementation": "1.0"
+        },
+        "require-dev": {
+            "cache/integration-tests": "dev-master",
+            "doctrine/cache": "^1.6",
+            "doctrine/dbal": "^2.5|^3.0",
+            "predis/predis": "^1.1",
+            "psr/simple-cache": "^1.0",
+            "symfony/config": "^4.4|^5.0",
+            "symfony/dependency-injection": "^4.4|^5.0",
+            "symfony/var-dumper": "^4.4|^5.0"
+        },
+        "time": "2020-07-23T17:22:30+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Cache\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Cache component with PSR-6, PSR-16, and tags",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "caching",
+            "psr6"
+        ]
+    },
+    {
+        "name": "symfony/cache-contracts",
+        "version": "v2.1.3",
+        "version_normalized": "2.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/cache-contracts.git",
+            "reference": "9771a09d2e6b84ecb8c9f0a7dbc72ee92aeba009"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/9771a09d2e6b84ecb8c9f0a7dbc72ee92aeba009",
+            "reference": "9771a09d2e6b84ecb8c9f0a7dbc72ee92aeba009",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.2.5",
+            "psr/cache": "^1.0"
+        },
+        "suggest": {
+            "symfony/cache-implementation": ""
+        },
+        "time": "2020-07-06T13:23:11+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.1-dev"
+            },
+            "thanks": {
+                "name": "symfony/contracts",
+                "url": "https://github.com/symfony/contracts"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Contracts\\Cache\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Generic abstractions related to caching",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "abstractions",
+            "contracts",
+            "decoupling",
+            "interfaces",
+            "interoperability",
+            "standards"
         ]
     },
     {
@@ -6338,6 +7163,78 @@
         "homepage": "https://symfony.com"
     },
     {
+        "name": "symfony/psr-http-message-bridge",
+        "version": "v2.0.1",
+        "version_normalized": "2.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/psr-http-message-bridge.git",
+            "reference": "e44f249afab496b4e8c0f7461fb8140eaa4b24d2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/e44f249afab496b4e8c0f7461fb8140eaa4b24d2",
+            "reference": "e44f249afab496b4e8c0f7461fb8140eaa4b24d2",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.1",
+            "psr/http-message": "^1.0",
+            "symfony/http-foundation": "^4.4 || ^5.0"
+        },
+        "require-dev": {
+            "nyholm/psr7": "^1.1",
+            "symfony/phpunit-bridge": "^4.4 || ^5.0"
+        },
+        "suggest": {
+            "nyholm/psr7": "For a super lightweight PSR-7/17 implementation"
+        },
+        "time": "2020-06-25T08:21:47+00:00",
+        "type": "symfony-bridge",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Bridge\\PsrHttpMessage\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            }
+        ],
+        "description": "PSR HTTP message bridge",
+        "homepage": "http://symfony.com",
+        "keywords": [
+            "http",
+            "http-message",
+            "psr-17",
+            "psr-7"
+        ]
+    },
+    {
         "name": "symfony/routing",
         "version": "v5.1.2",
         "version_normalized": "5.1.2.0",
@@ -6809,6 +7706,75 @@
         "keywords": [
             "debug",
             "dump"
+        ]
+    },
+    {
+        "name": "symfony/var-exporter",
+        "version": "v5.1.3",
+        "version_normalized": "5.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/var-exporter.git",
+            "reference": "eabaabfe1485ca955c5b53307eade15ccda57a15"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/var-exporter/zipball/eabaabfe1485ca955c5b53307eade15ccda57a15",
+            "reference": "eabaabfe1485ca955c5b53307eade15ccda57a15",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.2.5",
+            "symfony/polyfill-php80": "^1.15"
+        },
+        "require-dev": {
+            "symfony/var-dumper": "^4.4.9|^5.0.9"
+        },
+        "time": "2020-06-07T15:42:22+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\VarExporter\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "A blend of var_export() + serialize() to turn any serializable data structure to plain PHP code",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "clone",
+            "construct",
+            "export",
+            "hydrate",
+            "instantiate",
+            "serialize"
         ]
     },
     {

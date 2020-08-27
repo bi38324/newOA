@@ -12,28 +12,6 @@ class WxUserService extends BaseService
         $this->model = new CustomerContact();
     }
 
-    public function syncYouzanBuyer($buyerInfo){
-
-        $wxUser = [];
-        // 仅同步微信登录信息
-        if(!empty($buyerInfo['outer_user_id'])){
-            $wxUser = $this->getInfoByFiled($buyerInfo['outer_user_id'],'open_id');
-
-            if(empty($wxUser)){
-                $data = [
-                    'open_id'      => $buyerInfo['outer_user_id'],
-                    'phone'        => $buyerInfo['buyer_phone'],
-                    'nickName'     => $buyerInfo['fans_nickname'],
-                    'headImgUrl'   => '',
-                    'union_id'     => '',
-                    'from_channel' => 'youzan',
-                ];
-                $wxUser = $this->model->create($data);
-            }
-        }
-        return $wxUser;
-    }
-
     public function getUserPhone($user){
 
         $staff = $this->getInfoByFiled($user['UserId'], 'userid');
@@ -50,18 +28,9 @@ class WxUserService extends BaseService
         $data['city']       = $wxData['city'];
         $data['country']    = $wxData['country'];
         $data['headImgUrl'] = $wxData['headimgurl'];
-        $data['union_id']   = $wxData['unionid'];
 
-        // 判断用户union_id是否存在
-        $user = null;
-        if(!empty($data['union_id'])){
-            $user = $this->getInfoByFiled($data['union_id'], 'union_id');
-        }
-
-        if(empty($user)){
-            // 不存在，再判断open_id存不存在
-            $user = $this->getInfoByFiled($data['open_id'], 'open_id');
-        }
+        // 判断open_id存不存在
+        $user = $this->getInfoByFiled($data['open_id'], 'open_id');
 
         // 是不是老用户
         if(!empty($user)){
@@ -134,13 +103,6 @@ class WxUserService extends BaseService
             'headImgUrl'   => '',
             'true_name'     => $realName
         ];
-//        $users  = new YhrUser();
-//        $userid = $users->getUser($phone);
-//
-//        if ($userid) {
-//            $data['tag']        = 1;
-//            $data['y_users_id'] = $userid;
-//        }
         return $this->model->create($data);
     }
 }
