@@ -7,7 +7,9 @@
  */
 
 namespace App\Http\Services;
-use Request;
+use App\Traits\Requests;
+use App\Traits\Responses;
+use Illuminate\Http\Request;
 
 class BaseService
 {

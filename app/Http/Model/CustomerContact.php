@@ -35,4 +35,14 @@ class CustomerContact extends Model
     {
         return $this->where('customer_id', $customer_id)->where('name', 'like', '%'.$name.'%')->where('phone', 'like', '%'.$phone.'%')->first();
     }
+
+    public function getByOpenId($open_id)
+    {
+        return $this->where('open_id', $open_id)->first();
+    }
+
+    public function getByPhone($customer_id, $phone)
+    {
+        return $this->where('customer_id', $customer_id)->where('phone', 'like', '%'.$phone.'%')->first();
+    }
 }

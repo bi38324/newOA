@@ -20,4 +20,9 @@ class Product extends Model
         $this->setParentColumn('PID');
         parent::__construct($attributes);
     }
+
+    public function getById($id)
+    {
+        return $this->where('id', $id)->first();
+    }
 }

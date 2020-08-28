@@ -15,4 +15,9 @@ class OrdersDetail extends Model
     {
         return $this->belongsTo(Params::class, 'params_id', 'id');
     }
+
+    public function getByOrdersId($orders_id)
+    {
+        return $this->where('orders_id', $orders_id)->get()->toArray();
+    }
 }

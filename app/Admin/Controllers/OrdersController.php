@@ -347,7 +347,6 @@ class OrdersController extends AdminController
             'customer_id' => 'required',
             'customer_demand_id' => 'required'
         ]);
-        dd($params);
         $file = request()->file('file_path');
         $contract_path = request()->file('contract_path');
         if ($file)

@@ -26,5 +26,7 @@ $api->version('v1', [
 ], function ($api) {
     // 微信授权
     $api->post('getWeChatInfo', 'WeChatController@getWeChatInfo');
+    $api->post('getOrders', 'WeChatController@getOrdersInfo');
+    $api->post('bindPhone', 'WeChatController@bindPhone');
 
 });

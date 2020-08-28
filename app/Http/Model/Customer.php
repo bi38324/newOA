@@ -45,4 +45,19 @@ class Customer extends Model
     {
         return $this->find($id);
     }
+
+    public function getContactByTitle($title, $phone)
+    {
+        $contact_id = null;
+        $customer = $this->where('title', 'like', '%'.$title.'%')->first();
+        if ($customer)
+        {
+            $contact = (new CustomerContact())->getByPhone($customer->id, $phone);
+            if ($contact)
+            {
+                $contact_id = $contact;
+            }
+        }
+        return $contact_id;
+    }
 }

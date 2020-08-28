@@ -14,9 +14,9 @@
 <!-- 	<h3>js触发选项卡</h3> -->
 <ul class="nav nav-tabs" id="myTab">
     <li class="active"><a href="#bulletin1">全部</a></li>
-    <li><a href="#rule1">待确认</a></li>
-    <li><a href="#forum1">进行中</a></li>
-    <li><a href="#security1">已完结</a></li>
+{{--    <li><a href="#rule1">待确认</a></li>--}}
+{{--    <li><a href="#forum1">进行中</a></li>--}}
+{{--    <li><a href="#security1">已完结</a></li>--}}
 </ul>
 <div id="mytab-content2" class="tab-content">
     <!-- 全部 -->
