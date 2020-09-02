@@ -15,9 +15,4 @@ class Controller extends BaseController
     {
         $this->config = $this->getOpenPlatFormConfig();
     }
-
-
-
-
-
 }

@@ -79,7 +79,7 @@ class OrdersController extends Controller
         {
             $contact['customer_contact_id'] = $users->id;
             $contact['customer_id'] = $users->customer_id;
-            $bind_back = $users->update(['open_id' => $wx_user['id'], 'headImgUrl' => $wx_user['headImgUrl'], 'sex' => $wx_user['sex']??0]);
+            $bind_back = $users->update(['open_id' => $wx_user['id'], 'headImgUrl' => $wx_user['avatar'], 'sex' => $wx_user['sex']??0]);
             if ($bind_back)
             {
                 return $this->success(['user' => $contact]);

@@ -18,7 +18,7 @@ Route::middleware('wechat.oauth')->group(function ($api) {
     $api->get('/orders', 'OrdersController@list');
     $api->get('/orders_confirm', 'OrdersController@confirm');
     // 客户绑定手机号
-    $api->get('/bindPhone', 'OrdersController@bindPhone');
+    $api->post('/bindPhone', 'OrdersController@bindPhone');
 });
 
 // 确认订单

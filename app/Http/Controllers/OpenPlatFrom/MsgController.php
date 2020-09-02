@@ -22,9 +22,8 @@ class MsgController extends Controller
     public function sendMsg($appid, $tpl = [], $type = '', $openid = '')
     {
 
-        $openPlatform = Factory::openPlatform($this->config);
+        $officialAccount = Factory::officialAccount($this->config);
 
-        $officialAccount = $openPlatform->officialAccount($appid);
         //$user = $officialAccount->user->get($openid);
 
         $service = $this->service($appid);
