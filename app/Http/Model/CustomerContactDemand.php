@@ -12,7 +12,7 @@ class CustomerContactDemand extends Model
 
     public function contact()
     {
-        return $this->hasOne(CustomerContact::class, 'customer_contact_id', 'id');
+        return $this->hasOne(CustomerContact::class, 'id', 'customer_contact_id');
     }
 
     public function getByContactId($contact_id)

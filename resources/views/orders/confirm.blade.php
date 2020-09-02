@@ -141,7 +141,7 @@
                     <label>产品名称：</label>
                     <span class="form-control">{{ $order['info']['product_title'] }}</span></label>
                 </div>
-                @if($order['detail'])
+                @if(!empty($order['detail']))
                     @foreach ($order['detail'] as $key => $value)
                         <div class="form-group">
                             <label>{{ $key }}：</label>
@@ -241,7 +241,7 @@
             </div>
             <div class="modal-body">
                 <label>公司名称：</label>
-                <input type="text" class="form-control input-text" id="company" placeholder="请输入您的公司名称">
+                <input type="text" class="form-control input-text" id="company" placeholder="请输入您的公司名称" value="{{ $order['info']['customer_title'] }}" readonly="readonly">
             </div>
             <div class="modal-body">
                 <label>手机号码：</label>

@@ -177,6 +177,6 @@ class OrdersDetailController extends AdminController
     }
 
     protected function settingTime($params_list = [], $orders = []){
-        return view('admin.orders', ['params_list' => $params_list, 'orders' => $orders]);
+        return view('Admin.orders', ['params_list' => $params_list, 'orders' => $orders]);
     }
 }

@@ -84,11 +84,23 @@ class CustomerDemandController extends AdminController
         $show->field('id', __('ID'));
         $show->field('customer.title', __('客户名称'));
         $show->field('demand', __('客户需求'));
-        $show->field('customer_contact.contact', __('联系人'))->as(function (){
-            return $this->customer_contact->contact->name;
+        $show->field('customer_name', __('联系人'))->as(function (){
+            $customer_name = "";
+            $customer_contact = (new CustomerContact())->getById($this->customer_contact->customer_contact_id);
+            if ($customer_contact)
+            {
+                $customer_name = $customer_contact->name;
+            }
+            return $customer_name;
         });
-        $show->field('customer_contact.contact', __('联系人电话'))->as(function (){
-            return $this->customer_contact->contact->phone;
+        $show->field('customer_phone', __('联系电话'))->as(function (){
+            $customer_phone = "";
+            $customer_contact = (new CustomerContact())->getById($this->customer_contact->customer_contact_id);
+            if ($customer_contact)
+            {
+                $customer_phone = $customer_contact->phone;
+            }
+            return $customer_phone;
         });
         $show->field('owner_user.name', __('所属销售'));
         $show->field('last_user.name', __('跟进销售'));

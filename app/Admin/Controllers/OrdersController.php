@@ -2,8 +2,10 @@
 
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\OpenPlatFrom\MsgController;
 use App\Http\Model\AdminUsers;
 use App\Http\Model\Customer;
+use App\Http\Model\CustomerContact;
 use App\Http\Model\CustomerContactDemand;
 use App\Http\Model\CustomerDemand;
 use App\Http\Model\Orders;
@@ -19,6 +21,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Validator;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class OrdersController extends AdminController
 {
@@ -110,6 +113,10 @@ class OrdersController extends AdminController
             }
             return "<span style='color:$color'>$title</span>";
         });
+        $grid->column('customer_confirm','客户确认单')->display(function () {
+            return QrCode::size(100)->margin(0)->encoding('UTF-8')->generate('http://oa.zgclouds.com/orders_confirm?order_id='.$this->id);
+        });
+
         $grid->filter(function($filter){
 
             // 去掉默认的id过滤器
@@ -377,6 +384,30 @@ class OrdersController extends AdminController
                 $result = (new Orders())->create($params);
                 if ($result)
                 {
+                    //通过需求ID查找对应的联系人，然后判断联系人有没有绑定微信，如果有，发送消息提醒
+                    $customer_contact_demand = (new CustomerContactDemand())->getByDemand($params['customer_demand_id']);
+                    if ($customer_contact_demand)
+                    {
+                        $contact = (new CustomerContact())->getById($customer_contact_demand->customer_contact_id);
+                        if ($contact)
+                        {
+                            if ($contact->open_id)
+                            {
+                                $tpl = [
+                                    'touser'      => $contact->open_id,
+                                    'template_id' => 'TUV40dzhtn8RYcHivHnjh_k8FlkDi1Oj3ZxH5Zrjwfk',
+                                    'url'         => 'http://oa.zgclouds.com/orders_confirm?order_id=' . $result->id,
+                                    'data'        => [
+                                        'first'            => '您好，您有一条新的需求确认通知',
+                                        'keyword1'    => $result->order_code,
+                                        'keyword2' => '待确认',
+                                        'Remark'           => '为不影响开发进度，请及时确认需求'
+                                    ]
+                                ];
+                                (new MsgController())->sendMsg('wx6a5c437327cd5bee', $tpl);
+                            }
+                        }
+                    }
                     $orders_status['orders_id'] = $result->id;
                     $res = (new OrdersStatus())->create($orders_status);
                     // 首次加到续费管理中
