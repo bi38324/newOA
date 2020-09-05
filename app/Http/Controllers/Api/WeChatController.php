@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Model\Customer;
+use App\Http\Model\CustomerContact;
 use App\Http\Model\Orders;
 use App\Http\Services\OrdersService;
 use App\Http\Services\WxUserService;
@@ -94,5 +95,32 @@ class WeChatController extends Controller
         } else {
             return $this->error(1000);
         }
+    }
+
+    public function getAllOrders(Request $request)
+    {
+        $wx_user = [
+            'id' => 'asdasdasofihwrhwe',
+            'headImgUrl' => null,
+            'sex' => null
+        ];
+        // 查询当前用户的id
+        $order_list = [];
+        $customer_contact = (new CustomerContact())->getByOpenId($wx_user['id']);
+        if ($customer_contact)
+        {
+            $wx_user['is_band'] = 1;
+            $wx_user['customer_contact_id'] = $customer_contact->id;
+            $wx_user['name'] = $customer_contact->name;
+            $order_list = (new OrdersService())->getAllOrders($wx_user['customer_contact_id']);
+        } else {
+            $wx_user['is_band'] = 0;
+            $wx_user['customer_contact_id'] = null;
+            $order_list['all'] = [];
+            $order_list['confirm'] = [];
+            $order_list['under_way'] = [];
+            $order_list['finish'] = [];
+        }
+        return $this->success(['data' => $order_list]);
     }
 }

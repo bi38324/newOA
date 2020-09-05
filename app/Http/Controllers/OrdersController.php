@@ -23,15 +23,38 @@ class OrdersController extends Controller
     {
         $user = session('wechat.oauth_user.default');// 拿到授权用户资料
         $wx_user = json_decode(json_encode($user,true),true);
-        return view('orders.list', ['user' => $wx_user]);
+//        $wx_user = [
+//            'id' => 'asdasdasofihwrhwe',
+//            'headImgUrl' => null,
+//            'sex' => null
+//        ];
+        // 查询当前用户的id
+        $customer_contact = (new CustomerContact())->getByOpenId($wx_user['id']);
+        if ($customer_contact)
+        {
+            $wx_user['is_band'] = 1;
+            $wx_user['customer_contact_id'] = $customer_contact->id;
+            $wx_user['name'] = $customer_contact->name;
+            $order_list = (new OrdersService())->getAllOrders($wx_user['customer_contact_id']);
+        } else {
+            $wx_user['is_band'] = 0;
+            $wx_user['customer_contact_id'] = null;
+            $order_list['all'] = [];
+            $order_list['confirm'] = [];
+            $order_list['under_way'] = [];
+            $order_list['finish'] = [];
+        }
+        return view('orders.lists', ['user' => $wx_user, 'order' => $order_list]);
     }
 
-//    public function info(Request $request)
-//    {
-//        $user = session('wechat.oauth_user.default');// 拿到授权用户资料
-//        $wx_user = json_decode(json_encode($user,true),true);
-//        return view('orders.list', ['user' => $wx_user]);
-//    }
+    public function info(Request $request)
+    {
+        $order_id = $request->input('order_id');
+
+        $order = (new OrdersService())->getOrdersInfo($order_id);
+
+        return view('orders.info', ['order' => $order]);
+    }
 
     public function confirm(Request $request)
     {

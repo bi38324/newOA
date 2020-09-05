@@ -28,5 +28,6 @@ $api->version('v1', [
     $api->post('getWeChatInfo', 'WeChatController@getWeChatInfo');
     $api->post('getOrders', 'WeChatController@getOrdersInfo');
     $api->post('bindPhone', 'WeChatController@bindPhone');
+    $api->post('getAllOrders', 'WeChatController@getAllOrders');
 
 });
