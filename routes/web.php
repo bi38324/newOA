@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 //
 Route::middleware('wechat.oauth')->group(function ($api) {
     // 订单列表
-//    $api->get('/orders', 'OrdersController@list');
+    $api->get('/orders', 'OrdersController@list');
+    $api->any('/orders_info','OrdersController@info');
+    $api->any('/orders', 'OrdersController@list');
     $api->get('/orders_confirm', 'OrdersController@confirm');
     // 客户绑定手机号
     $api->post('/bindPhone', 'OrdersController@bindPhone');
@@ -23,5 +25,5 @@ Route::middleware('wechat.oauth')->group(function ($api) {
 
 // 确认订单
 Route::post('/order_handle','OrdersController@order_handle');
-Route::any('/orders_info','OrdersController@info');
-Route::any('/orders', 'OrdersController@list');
+//Route::any('/orders_info','OrdersController@info');
+//Route::any('/orders', 'OrdersController@list');

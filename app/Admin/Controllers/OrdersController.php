@@ -293,6 +293,8 @@ class OrdersController extends AdminController
             $form->datetime('start_time', __('开始时间'))->default(date('Y-m-d H:i:s'));
         }
         $form->datetime('end_time', __('结束时间'))->default(date('Y-m-d H:i:s'));
+        $form->datetimeRange('start_time', 'end_time', 'Time Range');
+
         $form->select('admin_user_id', __('所属销售'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
         $form->textarea('sales_remark', __('销售备注'));
 
@@ -303,7 +305,7 @@ class OrdersController extends AdminController
         $form->file('file_path', __('上传附件'))->required();
         $form->file('contract_path', __('合同上传'))->required();
         $form->radio('status', __('订单状态'))->options([0 => '待开发', 1 => '开发中', 2 => '开发完成', 3 => '已交付', 4 => '已关闭'])->default(0);
-        $form->radio('service_status', __('服务状态'))->options([0 => '服务未开始', 1 => '服务中', 2 => '服务到期'])->default(0);
+        $form->radio('service_status', __('服务状态'))->options([0 => '服务未开始', 1 => '服务中', 2 => '服务到期'])->default(1);
 
         if ($id)
         {
@@ -442,7 +444,6 @@ class OrdersController extends AdminController
         {
             $params['file_path'] = $file;
         }
-        dd($parame);
         if(isset($parame['_editable']))
         {
             $param = explode('.', $parame['name']);
@@ -493,27 +494,28 @@ class OrdersController extends AdminController
                 "price" => $parame['price'],
                 "receivable" => $parame['receivable'],
                 "receipts" => $parame['receipts'],
-                "sales_remark" => $parame['sales_remark'],
-                "it_remark" => $parame['it_remark'],
+                "sales_remark" => $parame['orders_status']['sales_remark'],
+                "it_remark" => $parame['orders_status']['it_remark'] ?? null,
             ];
             if(!empty($file))  {
                 $file_path = (new Upload())->upload($file);
                 $order_params['file_path'] = $file_path;
             }
             $status_params = [
-                "finance_status" => $parame['finance_status'] ?? null,
-                "finance_remark" => $parame['finance_remark'] ?? null,
-                "finance_user_id" => $parame['finance_user_id'] ?? null,
-                "commerce_status" => $parame['commerce_status'] ?? null,
-                "commerce_remark" => $parame['commerce_remark'] ?? null,
-                "commerce_user_id" => $parame['commerce_user_id'] ?? null,
-                "it_status" => $parame['it_status'] ?? null,
-                "it_remark" => $parame['it_remark'] ?? null,
-                "it_user_id" => $parame['it_user_id'] ?? null,
-                "check_status" => $parame['check_status'] ?? null,
-                "check_remark" => $parame['check_remark'] ?? null,
-                "check_user_id" => $parame['check_user_id'] ?? null,
+                "finance_status" => $parame['orders_status']['finance_status'] ?? null,
+                "finance_remark" => $parame['orders_status']['finance_remark'] ?? null,
+                "finance_user_id" => $parame['orders_status']['finance_user_id'] ?? null,
+                "commerce_status" => $parame['orders_status']['commerce_status'] ?? null,
+                "commerce_remark" => $parame['orders_status']['commerce_remark'] ?? null,
+                "commerce_user_id" => $parame['orders_status']['commerce_user_id'] ?? null,
+                "it_status" => $parame['orders_status']['it_status'] ?? null,
+                "it_remark" => $parame['orders_status']['it_remark'] ?? null,
+                "it_user_id" => $parame['orders_status']['it_user_id'] ?? null,
+                "check_status" => $parame['orders_status']['check_status'] ?? null,
+                "check_remark" => $parame['orders_status']['check_remark'] ?? null,
+                "check_user_id" => $parame['orders_status']['check_user_id'] ?? null,
             ];
+
             if ($status_params['finance_status'] && $status_params['finance_status'] == 2)
             {
                 $order_params['status'] = 1;
@@ -528,7 +530,10 @@ class OrdersController extends AdminController
                 // 修改 orders_status
                 $orders_status = new OrdersStatus();
                 $orders_status_info = $orders_status->getByOrdersId($id);
-                $res = $orders_status_info->update($status_params);
+                if ($orders_status_info)
+                {
+                    $res = $orders_status_info->update($status_params);
+                }
                 $status_params['orders_id'] = $id;
                 $status_log = (new OrdersStatusLog())->create($status_params);
                 return redirect(admin_url('/orders'));
