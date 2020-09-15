@@ -93,6 +93,8 @@ return array(
     'Dingo\\Api\\' => array($vendorDir . '/dingo/api/src'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
+    'Codingyu\\Ueditor\\' => array($vendorDir . '/codingyu/ueditor/src'),
+    'Codingyu\\LaravelUEditor\\' => array($vendorDir . '/codingyu/laravel-ueditor/src'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
     'Asm89\\Stack\\' => array($vendorDir . '/asm89/stack-cors/src/Asm89/Stack'),

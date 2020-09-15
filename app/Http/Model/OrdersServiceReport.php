@@ -9,6 +9,7 @@ class OrdersServiceReport extends Model
 {
     protected $table = 'orders_service_report';
     protected $guarded = [];
+    protected $appends = ['report_path'];
     use SoftDeletes;
 
     public function orders()
@@ -20,4 +21,16 @@ class OrdersServiceReport extends Model
     {
         return $this->belongsTo(AdminUsers::class, 'admin_user_id', 'id');
     }
+
+    public function getReportPathAttribute()
+    {
+        $report_url = env('APP_URL').'/upload/'.$this->report_url;
+        return $report_url;
+    }
+
+    public function getById($id)
+    {
+        return $this->where('id', $id)->first();
+    }
+
 }

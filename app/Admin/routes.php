@@ -67,6 +67,8 @@ Route::group([
     $router->resource('orders-status-logs', 'OrdersStatusLogController');
     // 订单代运维信息
     $router->resource('orders-devOps', 'OrdersDevOpsController');
+    // 订单服务报告管理
+    $router->resource('orders-server-report', 'OrdersServiceReportController');
 
 
     // 根据客户ID获取客户跟单的接口

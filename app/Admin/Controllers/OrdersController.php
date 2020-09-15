@@ -251,13 +251,38 @@ class OrdersController extends AdminController
                 $devOps->resource('/admin/orders-devOps');
                 $devOps->model()->orderBy('created_at', 'desc');
                 $devOps->column('id', 'ID');
-//                $account->column('orders_id', __('订单号'));
                 $devOps->column('orders.order_code', __('订单号'));
                 $devOps->column('orders.customer_title', __('客户名称'));
                 $devOps->column('domain', __('域名管理权限'));
                 $devOps->column('host', __('主机管理权限'));
                 $devOps->column('website', __('网站后台管理权限'));
                 $devOps->column('admin_user.name', __('生成人'));
+                $devOps->disableRowSelector();
+                $devOps->disableColumnSelector();
+                $devOps->disableExport();
+                $devOps->disableFilter();
+                $devOps->perPages([5, 10, 20, 30, 50,100]);
+                $devOps->paginate(5);
+                $devOps->actions(function ($actions) {
+                    // 去掉删除
+                    $actions->disableDelete();
+                    $actions->disableView();
+                });
+            });
+
+            $show->orders_server_report('服务报告管理', function ($devOps) use ($id) {
+                $devOps->resource('/admin/orders-server-report');
+                $devOps->model()->orderBy('created_at', 'desc');
+                $devOps->column('id', 'ID');
+                $devOps->column('orders.order_code', __('订单号'));
+                $devOps->column('orders.customer_title', __('客户名称'));
+                $devOps->column('report_url', __('服务报告地址'))->display(function ($report_url) {
+                    return env('APP_URL').'upload/'.$report_url;
+                })->link();
+//                $devOps->column('report_path', __('服务报告地址'))->as(function ($report_path) {
+//                    return env('APP_URL').'upload/'.$report_path;
+//                })->link();
+                $devOps->column('admin_user.name', __('提交'));
                 $devOps->disableRowSelector();
                 $devOps->disableColumnSelector();
                 $devOps->disableExport();
@@ -333,6 +358,7 @@ class OrdersController extends AdminController
             {
                 $form->select('orders_status.commerce_status', __('商务部状态'))->options([0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
                 $form->textarea('orders_status.commerce_remark', __('商务部备注'));
+//                $form->UEditor('content');
                 $form->select('orders_status.commerce_user_id', __('操作人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
             } elseif($user->isRole('finance'))
             {

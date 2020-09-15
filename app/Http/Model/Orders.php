@@ -60,9 +60,13 @@ class Orders extends Model
 
     public function orders_devOps()
     {
-        return $this->hasMany(OrdersDevOps::class,'id','orders_id');
+        return $this->hasMany(OrdersDevOps::class,'orders_id','id');
     }
 
+    public function orders_server_report()
+    {
+        return $this->hasMany(OrdersServiceReport::class, 'orders_id', 'id');
+    }
     public function getFileUrlAttribute()
     {
         $file_url = env('APP_URL').'upload/'.$this->file_path;

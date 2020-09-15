@@ -11,6 +11,7 @@
         "php": "^7.2.5",
         "ext-curl": "*",
         "ext-json": "*",
+        "codingyu/ueditor": "^3.0",
         "dingo/api": "^3.0",
         "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "^4.2",
