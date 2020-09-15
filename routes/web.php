@@ -19,11 +19,15 @@ Route::middleware('wechat.oauth')->group(function ($api) {
     $api->any('/orders_info','OrdersController@info');
     $api->any('/orders', 'OrdersController@list');
     $api->get('/orders_confirm', 'OrdersController@confirm');
+//    $api->get('/orders_checkout', 'OrdersController@checkout');
     // 客户绑定手机号
     $api->post('/bindPhone', 'OrdersController@bindPhone');
 });
 
 // 确认订单
 Route::post('/order_handle','OrdersController@order_handle');
+// 确认验收
+Route::post('/order_checkout_handle','OrdersController@order_checkout_handle');
 //Route::any('/orders_info','OrdersController@info');
 //Route::any('/orders', 'OrdersController@list');
+Route::any('/orders_checkout', 'OrdersController@checkout');

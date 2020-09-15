@@ -134,21 +134,21 @@
                 <input hidden="hidden" id="customer_contact_id" value="{{ $user['customer_contact_id'] }}"/>
                 <div class="form-group">
                     <label>公司名称：</label>
-                    <span class="form-control">{{ $order['info']['customer_title'] }}</span>
+                    <span class="form-control">{{ $order['info']['customer_title'] }}</span></label>
                 </div>
 
                 <div class="form-group">
                     <label>产品名称：</label>
-                    <span class="form-control">{{ $order['info']['product_title'] }}</span>
+                    <span class="form-control">{{ $order['info']['product_title'] }}</span></label>
                 </div>
                 @if(!empty($order['detail']))
                     @foreach ($order['detail'] as $key => $value)
                         <div class="form-group">
                             <label>{{ $key }}：</label>
-                            <span class="form-control">{{ $value }}</span>
+                            <span class="form-control">{{ $value }}</span></label>
                         </div>
                     @endforeach
-                    @endif
+                @endif
 
                 <div class="form-group">
                     <label>需求确认单附件地址：</label>
@@ -156,41 +156,41 @@
                 </div>
                 <div class="form-group">
                     <label>开始时间：</label>
-                    <span class="form-control">{{ $order['info']['start_time'] }}</span>
+                    <span class="form-control">{{ $order['info']['start_time'] }}</span></label>
                 </div>
                 <div class="form-group">
                     <label>结束时间：</label>
-                    <span class="form-control">{{ $order['info']['end_time'] }}</span>
+                    <span class="form-control">{{ $order['info']['end_time'] }}</span></label>
                 </div>
 
                 <div class="form-group">
                     <label>销售金额：</label>
-                    <span class="form-control">{{ $order['info']['price'] }}</span>
+                    <span class="form-control">{{ $order['info']['price'] }}</span></label>
                 </div>
                 <div class="form-group">
                     <label>实收金额：</label>
-                    <span class="form-control">{{ $order['info']['receipts'] }}</span>
+                    <span class="form-control">{{ $order['info']['receipts'] }}</span></label>
                 </div>
                 <div class="form-group">
                     <label>订单状态：</label>
                     @switch($order['info']['status'])
                         @case(0)
-                        <span class="form-control">待开发</span>
+                        <span class="form-control">待开发</span></label>
                         @break
                         @case(1)
-                        <span class="form-control">开发中</span>
+                        <span class="form-control">开发中</span></label>
                         @break
                         @case(2)
-                        <span class="form-control">开发完成</span>
+                        <span class="form-control">开发完成</span></label>
                         @break
                         @case(3)
-                        <span class="form-control">已交付</span>
+                        <span class="form-control">已交付</span></label>
                         @break
                     @endswitch
                 </div>
                 <div class="form-group">
                     <label>跟进销售：</label>
-                    <span class="form-control">{{ $order['info']['last_user'] }}</span>
+                    <span class="form-control">{{ $order['info']['last_user'] }}</span></label>
                 </div>
             </div>
         </div>
@@ -204,18 +204,18 @@
                             @case(0)
                             <button type="button" class="picture btn btn-default" onclick="agreen(0)">取消</button>
                             @switch ($user['is_band'])
-                                    @case(0)
-                                    <button type="button" class="picture btn btn-primary" data-toggle="modal"
-                                            data-target="#myModal">确定</button>
-                                    @break
-                                    @case(1)
-                                    <button type="button" class="picture btn btn-primary" data-toggle="modal"
-                                            onclick="agreen(1)">确定</button>
-                                    @break
-                                @endswitch
+                                @case(0)
+                                <button type="button" class="picture btn btn-primary" data-toggle="modal"
+                                        data-target="#myModal">确定</button>
+                                @break
+                                @case(1)
+                                <button type="button" class="picture btn btn-primary" data-toggle="modal"
+                                        onclick="agreen(1)">确定</button>
+                                @break
+                            @endswitch
                             @break
                             @case(1)
-                                <button type="button" class="picture btn btn-primary" data-toggle="modal" disabled="disabled">已确定</button>
+                            <button type="button" class="picture btn btn-primary" data-toggle="modal" disabled="disabled">已确定</button>
                             @break
                         @endswitch
                     </div>
@@ -297,7 +297,7 @@
     }
 
     function agreen(customer_status){
-        var url = '/order_handle';
+        var url = '/order_checkout_handle';
         $.ajax({
             type:'POST',
             url:url,
@@ -311,7 +311,7 @@
             success:function ($response){
                 if($response.code==="200")
                 {
-                    alert('需求确认成功');
+                    alert('验收成功');
                     window.location.reload();
                 }else {
                     alert($response.message)

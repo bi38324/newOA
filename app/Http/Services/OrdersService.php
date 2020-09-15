@@ -129,4 +129,22 @@ class OrdersService extends BaseService
         return $order_list;
 
     }
+
+    public function getNavPid($product_id)
+    {
+        $list = [];
+        $arr = (new Product())->getList();
+        if ($arr)
+        {
+            foreach ($arr as $key => $value)
+            {
+                $list[$value['id']] = $value['PID'];
+            }
+        }
+        $id = $product_id;
+        while($list[$id]) {
+            $id = $list[$id];
+        }
+        return $id;
+    }
 }

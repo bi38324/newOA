@@ -25,4 +25,10 @@ class Product extends Model
     {
         return $this->where('id', $id)->first();
     }
+
+    public function getList()
+    {
+        return $this->get(['id', 'PID'])->toArray();
+    }
+
 }

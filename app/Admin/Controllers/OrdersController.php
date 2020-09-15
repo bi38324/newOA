@@ -13,6 +13,7 @@ use App\Http\Model\OrdersRenewLog;
 use App\Http\Model\OrdersStatus;
 use App\Http\Model\ordersStatusLog;
 use App\Http\Model\Product;
+use App\Http\Services\OrdersService;
 use App\Libs\Upload;
 use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
@@ -43,23 +44,31 @@ class OrdersController extends AdminController
         $admin = new Admin();
         $user = $admin->user();
         $grid->model()->orderBy('updated_at', 'desc');
-        $ids = [];
 
         if($user->isRole('sales'))
         {
-//            $customer_ids = (new CustomerDemand())->getByLastUser($user->id);
-//            if ($customer_ids)
-//            {
-//                foreach ($customer_ids as $value)
-//                {
-//                    $ids[] = $value['id'];
-//                }
-//            }
-//            $grid->model()->where('customer_demand_id', 'in', $ids);
             $grid->model()->where('last_user_id', '=', $user->id);
-//        } elseif($user->isRole('commerce'))
-//        {
-//            $grid->model()->where('status', '!=', 4);
+        } elseif($user->isRole('commerce'))
+        {
+            $grid->model()->where(function ($query) {
+                $query->whereHas('orders_status', function ($query) {
+                    $query->where('finance_status', 2);
+                });
+            });
+        } elseif($user->isRole('it'))
+        {
+            $grid->model()->where(function ($query) {
+                $query->whereHas('orders_status', function ($query) {
+                    $query->where('commerce_status', 3);
+                });
+            });
+        } elseif($user->isRole('check'))
+        {
+            $grid->model()->where(function ($query) {
+                $query->whereHas('orders_status', function ($query) {
+                    $query->where('commerce_status', 4);
+                });
+            });
         }
         $grid->column('id', __('ID'));
         $grid->column('order_code', __('订单号'));
@@ -79,6 +88,8 @@ class OrdersController extends AdminController
         if($user->isRole('commerce') || $user->isRole('administrator'))
         {
             $grid->column('orders_status.commerce_status', __('开发状态'))->editable('select', [0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
+        }else {
+            $grid->column('orders_status.commerce_status', __('开发状态'))->using([0 => '待处理', 1 => '资料不完整', 2 => '开发中', 3 => '申请技术协助', 4 => '开发完成']);
         }
         if($user->isRole('it') || $user->isRole('administrator'))
         {
@@ -92,7 +103,6 @@ class OrdersController extends AdminController
         } else {
             $grid->column('file_url', __('附件地址'))->link();
         }
-//        $grid->column('service_status', __('服务状态'))->using([0 => '服务未开始', 1 => '服务中', 2 => '服务到期']);
         $grid->column('service_status', '服务状态')->display(function ($service_status) {
             $color = '';
             $title = '';
@@ -135,7 +145,6 @@ class OrdersController extends AdminController
             $actions->disableDelete();
 
             $apiUrl = '/admin/orders-renew-log/create?orders_id='.$actions->row->id;
-//            $actions->append("<div class='mb-5'><a class='grid-row-pass' data-id='{$actions->row->id}' title='续费'><i class='fa fa-paper-plane'></i></a></div>");
             $actions->append("<div class='mb-5'><a class='grid-row-pass' data-id='{$actions->row->id}' href='{$apiUrl}' title='续费'>续费</a></div>");
         });
 
@@ -162,8 +171,8 @@ class OrdersController extends AdminController
         $show->field('customer_title', __('客户名称'));
         $show->field('customer_demand.demand', __('需求'));
         $show->field('product.title', __('产品名称'));
-        $show->field('start_time', __('开始时间'));
-        $show->field('end_time', __('结束时间'));
+        $show->field('start_time', __('合同开始时间'));
+        $show->field('end_time', __('合同结束时间'));
         $show->field('admin_user.name', __('所属销售'));
         $show->field('price', __('销售金额'));
         $show->field('receivable', __('应收金额'));
@@ -236,22 +245,32 @@ class OrdersController extends AdminController
                 });
             });
         }
-//        $show->orders_status('订单状态', function ($account) use ($id) {
-//            $account->column('finance_status', '财务状态')->using([0 => '待处理', 1 => '未收到款', 2 => '已收到款']);
-//            $account->column('finance_remark', '财务备注');
-////            $account->column('finance_user_id', '财务审批人')->as(function ($content) {
-////                dd($content);
-////                return "<pre>{$content}</pre>";
-////            });
-//            $account->disableRowSelector();
-//            $account->disableColumnSelector();
-//            $account->disableCreateButton();
-//            $account->disableExport();
-//            $account->disableFilter();
-//            $account->perPages([5, 10, 20, 30, 50,100]);
-//            $account->paginate(5);
-//            $account->disableActions();
-//        });
+
+        if ($user->can('administrator') || $user->isRole('commerce')) {
+            $show->orders_devOps('代运维信息表', function ($devOps) use ($id) {
+                $devOps->resource('/admin/orders-devOps');
+                $devOps->model()->orderBy('created_at', 'desc');
+                $devOps->column('id', 'ID');
+//                $account->column('orders_id', __('订单号'));
+                $devOps->column('orders.order_code', __('订单号'));
+                $devOps->column('orders.customer_title', __('客户名称'));
+                $devOps->column('domain', __('域名管理权限'));
+                $devOps->column('host', __('主机管理权限'));
+                $devOps->column('website', __('网站后台管理权限'));
+                $devOps->column('admin_user.name', __('生成人'));
+                $devOps->disableRowSelector();
+                $devOps->disableColumnSelector();
+                $devOps->disableExport();
+                $devOps->disableFilter();
+                $devOps->perPages([5, 10, 20, 30, 50,100]);
+                $devOps->paginate(5);
+                $devOps->actions(function ($actions) {
+                    // 去掉删除
+                    $actions->disableDelete();
+                    $actions->disableView();
+                });
+            });
+        }
         return $show;
     }
 
@@ -285,15 +304,14 @@ class OrdersController extends AdminController
             $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id)->readOnly();
             $form->select('customer_demand_id', __('客户需求'))->options(CustomerDemand::all()->pluck('demand', 'id'))->required()->readOnly();
             $form->select('product_id', __('产品ID'))->options(Product::selectOptions())->required()->readOnly();
-            $form->datetime('start_time', __('开始时间'))->default(date('Y-m-d H:i:s'))->readonly();
+            $form->datetime('start_time', __('合同开始时间'))->default(date('Y-m-d H:i:s'))->readonly();
         } else {
             $form->select('customer_id', __('客户名称'))->options(Customer::all()->pluck('title', 'id'))->required()->load('customer_demand_id', '/admin/api/getCustomerDemand?last_user_id='.$user_id);
             $form->select('customer_demand_id', __('客户需求'))->options(CustomerDemand::all()->pluck('demand', 'id'))->required();
             $form->select('product_id', __('产品ID'))->options(Product::selectOptions())->required();
-            $form->datetime('start_time', __('开始时间'))->default(date('Y-m-d H:i:s'));
+            $form->datetime('start_time', __('合同开始时间'))->default(date('Y-m-d H:i:s'));
         }
-        $form->datetime('end_time', __('结束时间'))->default(date('Y-m-d H:i:s'));
-        $form->datetimeRange('start_time', 'end_time', 'Time Range');
+        $form->datetime('end_time', __('合同结束时间'))->default(date('Y-m-d H:i:s'));
 
         $form->select('admin_user_id', __('所属销售'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
         $form->textarea('sales_remark', __('销售备注'));
@@ -302,8 +320,10 @@ class OrdersController extends AdminController
         $form->decimal('receivable', __('应收金额'))->required();
         $form->decimal('receipts', __('实收金额'));
 
-        $form->file('file_path', __('上传附件'))->required();
+        $form->file('file_path', __('上传需求确认单'))->required();
         $form->file('contract_path', __('合同上传'))->required();
+//        $form->file('file_path', __('上传附件'));
+//        $form->file('contract_path', __('合同上传'));
         $form->radio('status', __('订单状态'))->options([0 => '待开发', 1 => '开发中', 2 => '开发完成', 3 => '已交付', 4 => '已关闭'])->default(0);
         $form->radio('service_status', __('服务状态'))->options([0 => '服务未开始', 1 => '服务中', 2 => '服务到期'])->default(1);
 
@@ -386,30 +406,6 @@ class OrdersController extends AdminController
                 $result = (new Orders())->create($params);
                 if ($result)
                 {
-                    //通过需求ID查找对应的联系人，然后判断联系人有没有绑定微信，如果有，发送消息提醒
-                    $customer_contact_demand = (new CustomerContactDemand())->getByDemand($params['customer_demand_id']);
-                    if ($customer_contact_demand)
-                    {
-                        $contact = (new CustomerContact())->getById($customer_contact_demand->customer_contact_id);
-                        if ($contact)
-                        {
-                            if ($contact->open_id)
-                            {
-                                $tpl = [
-                                    'touser'      => $contact->open_id,
-                                    'template_id' => 'TUV40dzhtn8RYcHivHnjh_k8FlkDi1Oj3ZxH5Zrjwfk',
-                                    'url'         => 'http://oa.zgclouds.com/orders_confirm?order_id=' . $result->id,
-                                    'data'        => [
-                                        'first'            => '您好，您有一条新的需求确认通知',
-                                        'keyword1'    => $result->order_code,
-                                        'keyword2' => '待确认',
-                                        'Remark'           => '为不影响开发进度，请及时确认需求'
-                                    ]
-                                ];
-                                (new MsgController())->sendMsg('wx6a5c437327cd5bee', $tpl);
-                            }
-                        }
-                    }
                     $orders_status['orders_id'] = $result->id;
                     $res = (new OrdersStatus())->create($orders_status);
                     // 首次加到续费管理中
@@ -427,6 +423,7 @@ class OrdersController extends AdminController
                         'owner_user_id' => $params['admin_user_id'],
                     ];
                     $re = (new OrdersRenewLog())->create($renew_data);
+                    return redirect(admin_url('/orders/'.$result->id));
                 }
             }
             return redirect(admin_url('/orders'));
@@ -444,100 +441,170 @@ class OrdersController extends AdminController
         {
             $params['file_path'] = $file;
         }
-        if(isset($parame['_editable']))
-        {
-            $param = explode('.', $parame['name']);
-            $parame[$param[1]] = $parame['value'];
-            unset($parame['name']);
-            unset($parame['value']);
-            unset($parame['pk']);
-            $ex_params = explode('_', $param[1]);
-            if ($ex_params[0] == 'finance')
+        $order_info = [
+            'id' => $id,
+            'order_code' => $orders->order_code,
+        ];
+        if ($orders) {
+            $status = '待验收';
+            $product = (new Product())->getById($orders->product_id);
+            if ($product)
             {
-                $parame['finance_user_id'] = $user->id;
-                if ($parame['finance_status'] == 2)
-                {
-                    $p['status'] = 1;
-                    $orders_res = $orders->update($p);
+                $order_info['product'] = $product->title;
+            } else {
+                $order_info['product'] = '';
+            }
+            if (isset($parame['_editable'])) {
+                $param = explode('.', $parame['name']);
+                $parame[$param[1]] = $parame['value'];
+                unset($parame['name']);
+                unset($parame['value']);
+                unset($parame['pk']);
+                $ex_params = explode('_', $param[1]);
+                if ($ex_params[0] == 'finance') {
+                    $parame['finance_user_id'] = $user->id;
+                    if ($parame['finance_status'] == 2) {
+                        $p['status'] = 1;
+                        $orders_res = $orders->update($p);
+//                        $status = '财务已收到款，等待开发';
+//                    } else {
+//                        $status = '财务未收到款';
+                    }
+                } elseif ($ex_params[0] == 'commerce') {
+                    $parame['commerce_user_id'] = $user->id;
+                    if ($parame['commerce_status'] == 2) {
+                        $p['status'] = 1;
+                        $orders_res = $orders->update($p);
+                    }
+                    switch($parame['commerce_status'])
+                    {
+                        case 1:
+                            $status = '资料不完整';
+                            break;
+                        case 4:
+                            $status = '开发完成，待验收';
+                            break;
+                        default:
+                            $status = "技术开发中";
+                            break;
+                    }
+                    $order_info['status'] = $status;
+                    //通过需求ID查找对应的联系人，然后判断联系人有没有绑定微信，如果有，发送消息提醒
+                    $customer_contact_demand = (new CustomerContactDemand())->getByDemand($orders->customer_demand_id);
+                    if ($customer_contact_demand)
+                    {
+                        $contact = (new CustomerContact())->getById($customer_contact_demand->customer_contact_id);
+                        if ($contact)
+                        {
+                            if ($contact->open_id)
+                            {
+                                (new MsgController())->sendMsg(env('WECHAT_OFFICIAL_ACCOUNT_APPID'), [], 'status', $contact->open_id, $order_info);
+                            }
+                        }
+                    }
+                } elseif ($ex_params[0] == 'it') {
+                    $parame['it_user_id'] = $user->id;
+                } elseif ($ex_params[0] == 'check') {
+                    $parame['check_user_id'] = $user->id;
+                    if ($parame['check_status'] == 2) {
+                        $p['status'] = 2;
+                        $orders_res = $orders->update($p);
+                    }
                 }
-            }elseif ($ex_params[0] == 'commerce')
-            {
-                $parame['commerce_user_id'] = $user->id;
-            }elseif ($ex_params[0] == 'it')
-            {
-                $parame['it_user_id'] = $user->id;
-            }elseif ($ex_params[0] == 'check')
-            {
-                $parame['check_user_id'] = $user->id;
-                if ($parame['check_status'] == 2)
-                {
-                    $p['status'] = 2;
-                    $orders_res = $orders->update($p);
-                }
-            }
-            $orders_status = new OrdersStatus();
-            $orders_status_info = $orders_status->getByOrdersId($id);
-            $res = $orders_status_info->update($parame);
-            $parame['orders_id'] = $id;
-            $result = (new OrdersStatusLog())->create($parame);
-            if($result) {
-                return response()->json(['status' => true, 'message' => '成功']);
-            }
-        } else {
-            $order_params = [
-                "customer_id" => $parame['customer_id'],
-                "customer_demand_id" => $parame['customer_demand_id'],
-                "product_id" => $parame['product_id'],
-                "start_time" => $parame['start_time'],
-                "end_time" => $parame['end_time'],
-                "admin_user_id" => $parame['admin_user_id'],
-                "price" => $parame['price'],
-                "receivable" => $parame['receivable'],
-                "receipts" => $parame['receipts'],
-                "sales_remark" => $parame['orders_status']['sales_remark'],
-                "it_remark" => $parame['orders_status']['it_remark'] ?? null,
-            ];
-            if(!empty($file))  {
-                $file_path = (new Upload())->upload($file);
-                $order_params['file_path'] = $file_path;
-            }
-            $status_params = [
-                "finance_status" => $parame['orders_status']['finance_status'] ?? null,
-                "finance_remark" => $parame['orders_status']['finance_remark'] ?? null,
-                "finance_user_id" => $parame['orders_status']['finance_user_id'] ?? null,
-                "commerce_status" => $parame['orders_status']['commerce_status'] ?? null,
-                "commerce_remark" => $parame['orders_status']['commerce_remark'] ?? null,
-                "commerce_user_id" => $parame['orders_status']['commerce_user_id'] ?? null,
-                "it_status" => $parame['orders_status']['it_status'] ?? null,
-                "it_remark" => $parame['orders_status']['it_remark'] ?? null,
-                "it_user_id" => $parame['orders_status']['it_user_id'] ?? null,
-                "check_status" => $parame['orders_status']['check_status'] ?? null,
-                "check_remark" => $parame['orders_status']['check_remark'] ?? null,
-                "check_user_id" => $parame['orders_status']['check_user_id'] ?? null,
-            ];
 
-            if ($status_params['finance_status'] && $status_params['finance_status'] == 2)
-            {
-                $order_params['status'] = 1;
-//            }elseif ($status_params['check_status'] && $status_params['check_status'] == 2)
-//            {
-//                $order_params['status'] = 2;
-            }else {
-                $order_params['status'] = $parame['status'];
-            }
-            $result = $orders->update($order_params);
-            if($result) {
-                // 修改 orders_status
                 $orders_status = new OrdersStatus();
                 $orders_status_info = $orders_status->getByOrdersId($id);
-                if ($orders_status_info)
-                {
-                    $res = $orders_status_info->update($status_params);
+                $res = $orders_status_info->update($parame);
+
+                $parame['orders_id'] = $id;
+                $result = (new OrdersStatusLog())->create($parame);
+                if ($result) {
+                    return response()->json(['status' => true, 'message' => '成功']);
                 }
-                $status_params['orders_id'] = $id;
-                $status_log = (new OrdersStatusLog())->create($status_params);
-                return redirect(admin_url('/orders'));
+            } else {
+                $order_params = [
+                    "customer_id" => $parame['customer_id'],
+                    "customer_demand_id" => $parame['customer_demand_id'],
+                    "product_id" => $parame['product_id'],
+                    "start_time" => $parame['start_time'],
+                    "end_time" => $parame['end_time'],
+                    "admin_user_id" => $parame['admin_user_id'],
+                    "price" => $parame['price'],
+                    "receivable" => $parame['receivable'],
+                    "receipts" => $parame['receipts'],
+                    "sales_remark" => $parame['orders_status']['sales_remark'],
+                    "it_remark" => $parame['orders_status']['it_remark'] ?? null,
+                ];
+                if (!empty($file)) {
+                    $file_path = (new Upload())->upload($file);
+                    $order_params['file_path'] = $file_path;
+                }
+                $status_params = [
+                    "finance_status" => $parame['orders_status']['finance_status'] ?? null,
+                    "finance_remark" => $parame['orders_status']['finance_remark'] ?? null,
+                    "finance_user_id" => $parame['orders_status']['finance_user_id'] ?? null,
+                    "commerce_status" => $parame['orders_status']['commerce_status'] ?? null,
+                    "commerce_remark" => $parame['orders_status']['commerce_remark'] ?? null,
+                    "commerce_user_id" => $parame['orders_status']['commerce_user_id'] ?? null,
+                    "it_status" => $parame['orders_status']['it_status'] ?? null,
+                    "it_remark" => $parame['orders_status']['it_remark'] ?? null,
+                    "it_user_id" => $parame['orders_status']['it_user_id'] ?? null,
+                    "check_status" => $parame['orders_status']['check_status'] ?? null,
+                    "check_remark" => $parame['orders_status']['check_remark'] ?? null,
+                    "check_user_id" => $parame['orders_status']['check_user_id'] ?? null,
+                ];
+                if ($status_params['commerce_status'])
+                {
+                    switch($parame['commerce_status'])
+                    {
+                        case 1:
+                            $status = '资料不完整';
+                            break;
+                        case 4:
+                            $status = '开发完成，待验收';
+                            break;
+                        default:
+                            $status = '技术开发中';
+                            break;
+                    }
+                    $order_info['status'] = $status;
+                    $order_info['remark'] = $parame['commerce_remark'];
+                }
+
+                if ($status_params['commerce_status'] && $status_params['commerce_status'] == 2) {
+                    $order_params['status'] = 1;
+                } elseif ($status_params['check_status'] && $status_params['check_status'] == 2) {
+                    $order_params['status'] = 2;
+                } else {
+                    $order_params['status'] = $parame['status'];
+                }
+                $result = $orders->update($order_params);
+                if ($result) {
+                    //通过需求ID查找对应的联系人，然后判断联系人有没有绑定微信，如果有，发送消息提醒
+                    $customer_contact_demand = (new CustomerContactDemand())->getByDemand($order_params['customer_demand_id']);
+                    if ($customer_contact_demand)
+                    {
+                        $contact = (new CustomerContact())->getById($customer_contact_demand->customer_contact_id);
+                        if ($contact)
+                        {
+                            if ($contact->open_id)
+                            {
+                                (new MsgController())->sendMsg(env('WECHAT_OFFICIAL_ACCOUNT_APPID'), [], 'status', $contact->open_id, $order_info);
+                            }
+                        }
+                    }
+                    // 修改 orders_status
+                    $orders_status = new OrdersStatus();
+                    $orders_status_info = $orders_status->getByOrdersId($id);
+                    if ($orders_status_info) {
+                        $res = $orders_status_info->update($status_params);
+                    }
+                    $status_params['orders_id'] = $id;
+                    $status_log = (new OrdersStatusLog())->create($status_params);
+                    return redirect(admin_url('/orders'));
+                }
             }
+
         }
     }
 }

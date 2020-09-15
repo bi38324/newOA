@@ -2,6 +2,7 @@
 
 namespace Encore\Admin\Auth\Database;
 
+use App\Http\Model\Department;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -74,6 +75,11 @@ class Administrator extends Model implements AuthenticatableContract
         $relatedModel = config('admin.database.roles_model');
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'role_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'dept_id', 'id');
     }
 
     /**

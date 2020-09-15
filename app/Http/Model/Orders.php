@@ -58,6 +58,11 @@ class Orders extends Model
         return $this->hasMany(OrdersRenewLog::class,'orders_id','id');
     }
 
+    public function orders_devOps()
+    {
+        return $this->hasMany(OrdersDevOps::class,'id','orders_id');
+    }
+
     public function getFileUrlAttribute()
     {
         $file_url = env('APP_URL').'upload/'.$this->file_path;
@@ -92,4 +97,15 @@ class Orders extends Model
         }
         return true;
     }
+
+//    public function getByStatus($status)
+//    {
+//        switch($status)
+//        {
+//            case 'commerce':
+//                $data = $this->whereHas()
+//                break;
+//        }
+//        return $data;
+//    }
 }

@@ -19,7 +19,7 @@ class MsgController extends Controller
         $this->sendMsg($appid, [], $type, $openid);
     }
 
-    public function sendMsg($appid, $tpl = [], $type = '', $openid = '')
+    public function sendMsg($appid, $tpl = [], $type = '', $openid = '', $order_info = [])
     {
 
         $officialAccount = Factory::officialAccount($this->config);
@@ -32,7 +32,7 @@ class MsgController extends Controller
 
             switch ($service) {
                 case 'shuzizhongguang':
-                    $tpl = $this->tplMsg($openid, $type);
+                    $tpl = $this->tplMsg($openid, $order_info, $type);
                     break;
             }
         }
@@ -42,37 +42,77 @@ class MsgController extends Controller
         }
     }
 
-    public function tplMsg($openid, $type = '')
+    public function tplMsg($openid, $order_info = [], $type = '')
     {
 
         $tpl = [];
         switch ($type) {
+            case 'server':
+                // 服务器开通成功推送
+                $tpl = [
+                    'touser'      => $openid,
+                    'template_id' => '9LkLae2379W1Fcam0gY560q1iA6HLxM3iz-560hRxMM',
+                    'data'        => [
+                        'first'            => '恭喜，你订购的服务器已经成功开通。',
+                        'keyword1'    => $order_info['server_ip'],
+                        'keyword2' => $order_info['server_name'],
+                        'keyword3' => $order_info['password'],
+                        'keyword4' => $order_info['port'],
+                        'Remark'           => '如在使用中遇到任何问题可拨打24小时服务热线：029-86697887'
+                    ]];
+                break;
             case 'order_confirm':
+                // 确认需求推送
                 $tpl = [
                     'touser'      => $openid,
                     'template_id' => 'TUV40dzhtn8RYcHivHnjh_k8FlkDi1Oj3ZxH5Zrjwfk',
-                    'url'         => 'http://oa.zgclouds.com/orders_confirm?order_id=12',
+                    'url'         => 'http://oa.zgclouds.com/orders_confirm?order_id=' . $order_info['id'],
                     'data'        => [
-                        'first'    => '央行银保专项班会',
-                        'keyword1' => '央行银保招考时间变化的应对措施',
-                        'keyword2' => '2019年08月31日 20:00' . "\r\n" . '主讲人： 小莉老师',
-                        'remark'   => ['value' => '参加码：6h7bet', 'color' => '#ff0000'],
-                    ]
-                ];
+                        'first'            => '您好，您有一条新的需求确认通知',
+                        'keyword1'    => $order_info['order_code'],
+                        'keyword2' => '待确认',
+                        'Remark'           => '为不影响开发进度，请及时确认需求'
+                    ]];
                 break;
-            case 'download':
-                // 课件下载
-                //$tpl = [
-                //    'touser'      => $openid,
-                //    'template_id' => 'gwUILqYt94yRsHG6IPG9GD77qnZPwtBxVXmNvW83jwA',
-                //    'data'        => [
-                //        'first'    => '您好，央行银保监新大纲发布会结束啦，赶快联系客服领取课件！',
-                //        'keyword1' => '《央行银保监新大纲》',
-                //        'keyword2' => '小莉老师',
-                //        'keyword3' => '联系在线客服领取',
-                //        'keyword4' => '2019年6月1日',
-                //        'remark'   => '在公众号下方留言即可，客服小姐姐还在线等着呢~',
-                //    ]];
+            case 'status':
+                // 订单状态更新
+                $tpl = [
+                    'touser'      => $openid,
+                    'template_id' => 'ULxj3fHGTL0Uq5BbQsuDoqrsHkg_IaOVZrsdVOFphIk',
+                    'data'        => [
+                        'first'    => '您的订单状态已更新，请查收',
+                        'keyword1' => $order_info['order_code'],
+                        'keyword2' => $order_info['product'] ?? '',
+                        'keyword3' => $order_info['status'],
+                        'keyword4' => date("Y-m-d"),
+                        'remark'   => $order_info['remark'] ?? '',
+                    ]];
+                break;
+            case 'checkout':
+                // 订单更新验收提醒
+                $tpl = [
+                    'touser'      => $openid,
+                    'template_id' => 'CNUaXxejDy5h3Y4heTnxe4Zks6UooaPSqtIu7SW-_zM',
+                    'url'         => 'http://oa.zgclouds.com/orders_checkout?order_id=' . $order_info['id'],
+                    'data'        => [
+                        'first'    => '您有一个订单正在等待验收',
+                        'keyword1' => $order_info['order_code'],
+                        'keyword2' => date('Y-m-d'),
+                        'remark'   => '请尽快完成验收，谢谢',
+                    ]];
+                break;
+            case 'payment':
+                // 确认收到款
+                $tpl = [
+                    'touser'      => $openid,
+                    'template_id' => 'fU2jmK_FV62MEAIBAqvfteNkcI4gCaSUGijpDbRY0VI',
+                    'data'        => [
+                        'first'    => '尊敬的客户您好，我们已确认收到款项',
+                        'keyword1' => $order_info['order_code'],
+                        'keyword2' => $order_info['receipts'],
+                        'keyword3' => $order_info['pay_time'],
+                        'remark'   => '当前订单应收金额为'.$order_info['receivable'].'元，累计收款金额为'.$order_info['total'].'元，待支付金额为'.$order_info['arrears'].'元。感谢您对我们的支持!',
+                    ]];
                 break;
         }
         return $tpl;

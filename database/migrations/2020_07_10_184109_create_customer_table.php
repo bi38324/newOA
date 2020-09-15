@@ -227,6 +227,29 @@ class CreateCustomerTable extends Migration
         });
         DB::statement("ALTER TABLE `orders` comment '订单管理'");
 
+        Schema::create('orders_status_log', function (Blueprint $table) {
+            $table->increments('id')->comment('主键id');
+            $table->integer('orders_id')->comment('订单ID');
+            $table->tinyInteger('finance_status')->comment('财务认证 0：待处理  1:未收到款  2: 已收到款')->nullable();
+            $table->string('finance_remark')->comment('财务备注')->nullable();
+            $table->integer('finance_user_id')->comment('财务审批人')->nullable();
+            $table->tinyInteger('commerce_status')->comment('商务部认证 0：待处理  1：资料不完整 2：开发中 3：申请技术协助 4:开发完成')->nullable();
+            $table->string('commerce_remark')->comment('商务部备注')->nullable();
+            $table->longText('commerce_result')->comment('成果展示')->nullable();
+            $table->integer('commerce_user_id')->comment('商务部操作人ID')->nullable();
+            $table->tinyInteger('it_status')->comment('技术认证 0：待处理 1：处理中 2：处理完成')->nullable();
+            $table->string('it_remark')->comment('技术备注')->nullable();
+            $table->integer('it_user_id')->comment('技术操作人ID')->nullable();
+            $table->tinyInteger('check_status')->comment('验收认证 0：待处理 1：不合格 2：验收通过')->nullable();
+            $table->string('check_remark')->comment('验收人备注')->nullable();
+            $table->integer('check_user_id')->comment('验收操作人ID')->nullable();
+            $table->tinyInteger('customer_check_status')->comment('客户验收状态 0：待处理 1：修改问题 2：确认交付')->nullable()->default(0);
+            $table->longText('customer_check_remark')->comment('客户验收人备注')->nullable();
+            $table->integer('customer_check_contact_id')->comment('客户验收人ID')->nullable();
+            $table->timestamps();
+        });
+        DB::statement("ALTER TABLE `orders_status_log` comment '订单状态日志表'");
+
         Schema::create('orders_detail', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
             $table->integer('orders_id')->comment('订单ID');
@@ -248,27 +271,41 @@ class CreateCustomerTable extends Migration
         });
         DB::statement("ALTER TABLE `orders_log` comment '订单修改日志表'");
 
-        Schema::create('orders_status_log', function (Blueprint $table) {
+        Schema::create('orders_devOps', function (Blueprint $table) {
             $table->increments('id')->comment('主键id');
             $table->integer('orders_id')->comment('订单ID');
-            $table->tinyInteger('finance_status')->comment('财务认证 0：待处理  1:未收到款  2: 已收到款')->nullable();
-            $table->string('finance_remark')->comment('财务备注')->nullable();
-            $table->integer('finance_user_id')->comment('财务审批人')->nullable();
-            $table->tinyInteger('commerce_status')->comment('商务部认证 0：待处理  1：资料不完整 2：开发中 3：申请技术协助 4:开发完成')->nullable();
-            $table->string('commerce_remark')->comment('商务部备注')->nullable();
-            $table->integer('commerce_user_id')->comment('商务部操作人ID')->nullable();
-            $table->tinyInteger('it_status')->comment('技术认证 0：待处理 1：处理中 2：处理完成')->nullable();
-            $table->string('it_remark')->comment('技术备注')->nullable();
-            $table->integer('it_user_id')->comment('技术操作人ID')->nullable();
-            $table->tinyInteger('check_status')->comment('验收认证 0：待处理 1：不合格 2：验收通过')->nullable();
-            $table->string('check_remark')->comment('验收人备注')->nullable();
-            $table->integer('check_user_id')->comment('验收操作人ID')->nullable();
+            $table->longText('domain')->comment('域名管理权限')->nullable();
+            $table->longText('host')->comment('主机管理权限')->nullable();
+            $table->longText('website')->comment('网站后台管理权限')->nullable();
+            $table->integer('admin_user_id')->comment('操作人ID');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        DB::statement("ALTER TABLE `orders_devOps` comment '技术外包订单代运维信息表'");
+
+        Schema::create('orders_check_log', function (Blueprint $table) {
+            $table->increments('id')->comment('主键id');
+            $table->integer('orders_id')->comment('订单ID');
+            $table->longText('content')->comment('验收的内容')->nullable();
+            $table->longText('fix_remark')->comment('操作人备注')->nullable();
+            $table->integer('admin_user_id')->comment('操作人ID');
             $table->tinyInteger('customer_check_status')->comment('客户验收状态 0：待处理 1：修改问题 2：确认交付')->nullable()->default(0);
             $table->string('customer_check_remark')->comment('客户验收人备注')->nullable();
             $table->integer('customer_check_contact_id')->comment('客户验收人ID')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
-        DB::statement("ALTER TABLE `orders_status_log` comment '订单状态日志表'");
+        DB::statement("ALTER TABLE `orders_check_log` comment '技术外包订单验收记录表'");
+
+        Schema::create('orders_service_report', function (Blueprint $table) {
+            $table->increments('id')->comment('主键id');
+            $table->integer('orders_id')->comment('订单ID');
+            $table->string('report_url')->comment('服务报告地址')->nullable();
+            $table->integer('admin_user_id')->comment('操作人ID');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        DB::statement("ALTER TABLE `orders_service_report` comment '订单服务报告管理表'");
 
     }
 
@@ -298,5 +335,8 @@ class CreateCustomerTable extends Migration
         Schema::dropIfExists('orders_detail');
         Schema::dropIfExists('orders_log');
         Schema::dropIfExists('orders_status_log');
+        Schema::dropIfExists('orders_devOps');
+        Schema::dropIfExists('orders_check_log');
+        Schema::dropIfExists('orders_service_report');
     }
 }

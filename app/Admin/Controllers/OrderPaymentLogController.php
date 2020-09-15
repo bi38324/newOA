@@ -2,12 +2,16 @@
 
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\OpenPlatFrom\MsgController;
 use App\Http\Model\AdminUsers;
+use App\Http\Model\CustomerContact;
+use App\Http\Model\CustomerContactDemand;
 use App\Http\Model\OrderPaymentLog;
 use App\Http\Model\Orders;
 use App\Http\Model\OrdersRenewLog;
 use App\Http\Model\PayType;
 use App\Http\Model\Product;
+use App\Http\Services\OrdersService;
 use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -110,6 +114,7 @@ class OrderPaymentLogController extends AdminController
         $form->decimal('receipts', __('本次收款金额'))->required();
         $form->select('pay_type_id', __('支付方式'))->options(PayType::all()->pluck('title', 'id'))->required();
         $form->datetime('pay_time', __('支付时间'))->required();
+        $form->radio('is_tax', __('是否含税'))->options([0 => '不含税', 1 => '含税'])->default(0)->required();
         $form->select('admin_user_id', __('入账人'))->options(AdminUsers::all()->pluck('name', 'id'))->readOnly()->default($user->id);
 
         return $form;
@@ -128,6 +133,8 @@ class OrderPaymentLogController extends AdminController
             return redirect(admin_url('/order-payment-log/create?renew_log_id='.$params['orders_renew_log_id']))->withErrors($validator);
         } else {
             $params['arrears'] = $params['receivable']-$params['old_receipts']-$params['receipts'];
+            $is_tax = $params['is_tax'];
+            unset($params['is_tax']);
             $result = (new OrderPaymentLog())->create($params);
             $orders_renew_log = (new OrdersRenewLog())->where('id', $params['orders_renew_log_id'])->firstOrFail();
 
@@ -137,13 +144,38 @@ class OrderPaymentLogController extends AdminController
                 {
                     $data['receipts'] = $params['old_receipts']+$params['receipts'];
                     $data['arrears'] = $params['arrears'];
+                    $data['is_tax'] = $is_tax;
                     $res = $orders_renew_log->update($data);
                 }
                 $orders_info = (new Orders())->where('id', $orders_renew_log->orders_id)->firstOrFail();
+                //通过订单ID查找需求ID，然后查找对应的联系人，然后判断联系人有没有绑定微信，如果有，发送消息提醒
                 if ($orders_info)
                 {
                     $orders['receipts'] = $params['old_receipts']+$params['receipts'];
                     $re = $orders_info->update($orders);
+                    $customer_contact_demand = (new CustomerContactDemand())->getByDemand($orders->customer_demand_id);
+                    if ($customer_contact_demand)
+                    {
+                        $contact = (new CustomerContact())->getById($customer_contact_demand->customer_contact_id);
+                        if ($contact)
+                        {
+                            if ($contact->open_id)
+                            {
+                                // 确认收到款推送
+                                $order_info = [
+                                    'id' => $params['orders_id'],
+                                    'order_code' => $orders->order_code,
+                                    'receipts' => $params['receipts'],// 本次收款金额
+                                    'total' => $params['old_receipts']+$params['receipts'],// 累计支付金额
+                                    'receivable' => $params['receivable'],// 应收金额
+                                    'pay_time' => $params['pay_time'],// 支付时间
+                                    'arrears' => $params['arrears'],// 待支付金额
+                                ];
+                                (new MsgController())->sendMsg(env('WECHAT_OFFICIAL_ACCOUNT_APPID'), [], 'payment', $contact->open_id, $order_info);
+                            }
+                        }
+                    }
+
                 }
             }
             return redirect(admin_url('/orders/'.$orders_renew_log->orders_id));

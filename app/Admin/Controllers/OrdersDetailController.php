@@ -2,14 +2,18 @@
 
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\OpenPlatFrom\MsgController;
 use App\Http\Model\AdminUsers;
 use App\Http\Model\Customer;
+use App\Http\Model\CustomerContact;
+use App\Http\Model\CustomerContactDemand;
 use App\Http\Model\Orders;
 use App\Http\Model\OrdersDetail;
 use App\Http\Model\OrdersLog;
 use App\Http\Model\Params;
 use App\Http\Model\Product;
 use App\Http\Model\ProductParams;
+use App\Http\Services\OrdersService;
 use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -148,11 +152,54 @@ class OrdersDetailController extends AdminController
             {
                 $order_log_data = [
                     'orders_id' => $item['orders_id'],
-                    'params_id' => $item['orders_id'],
-                    'value' => $item['orders_id'],
+                    'params_id' => $item['params_id'],
+                    'value' => $item['value'],
                     'admin_user_id' => $user->id,
                 ];
                 $res = (new OrdersLog())->create($order_log_data);
+            }
+        }
+        //通过订单ID查找需求ID，然后查找对应的联系人，然后判断联系人有没有绑定微信，如果有，发送消息提醒
+        $orders = (new Orders())->where('id', $params['orders_id'])->firstOrFail();
+        if ($orders)
+        {
+            $customer_contact_demand = (new CustomerContactDemand())->getByDemand($orders->customer_demand_id);
+            if ($customer_contact_demand)
+            {
+                $contact = (new CustomerContact())->getById($customer_contact_demand->customer_contact_id);
+                if ($contact)
+                {
+                    if ($contact->open_id)
+                    {
+                        $type = '';
+                        //如果当前订单的产品属于ITO运维服务这个大分类的产品，发送需求确认通知，如果是服务器则发送开通成功提醒。
+                        $order = (new OrdersService())->getOrdersInfo($params['orders_id']);
+                        // 查询当前产品所属的大分类
+                        $product = (new OrdersService())->getNavPid($orders->product_id);
+                        if ($product == 1)
+                        {
+                            // ITO运维服务
+                            $order_info = [
+                                'id' => $params['orders_id'],
+                                'order_code' => $orders->order_code
+                            ];
+                            $type = 'order_confirm';
+                            (new MsgController())->sendMsg(env('WECHAT_OFFICIAL_ACCOUNT_APPID'), [], $type, $contact->open_id, $order_info);
+                        } elseif ($product == 4)
+                        {
+                            // 服务器主机
+                            $order_info = [
+                                'id' => $params['orders_id'],
+                                'server_ip' => $order['detail']['服务器IP'],
+                                'server_name' => $order['detail']['服务器用户名'],
+                                'password' => $order['detail']['服务器密码'],
+                                'port' => $order['detail']['远程端口'],
+                            ];
+                            $type = 'server';
+                            (new MsgController())->sendMsg(env('WECHAT_OFFICIAL_ACCOUNT_APPID'), [], $type, $contact->open_id, $order_info);
+                        }
+                    }
+                }
             }
         }
         return redirect(admin_url('/orders/'.$params['orders_id']));

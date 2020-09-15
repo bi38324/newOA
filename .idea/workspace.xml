@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="">
+    <list default="true" id="0d7ff37a-2b29-4da7-821c-48218d10c429" name="Default Changelist" comment="修改我的订单列表">
+      <change afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersDevOpsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Model/OrdersCheckLog.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Model/OrdersDevOps.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Model/OrdersServiceReport.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/upload/扫码小程序流程设计-7.30.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/orders/checkout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/OrderPaymentLogController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrderPaymentLogController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/OrdersDetailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/OrdersDetailController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OpenPlatFrom/MsgController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OpenPlatFrom/MsgController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Model/Orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/Orders.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Model/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Model/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Services/OrdersService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_10_184109_create_customer_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_10_184109_create_customer_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/orders/confirm.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/orders/confirm.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Auth/Database/Administrator.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Auth/Database/Administrator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/encore/laravel-admin/src/Controllers/UserController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,23 +185,23 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../promote_sys" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\laragon\www\newOa\public\img" />
-      <recent name="F:\laragon\www\newOa\public\mobile\css" />
-      <recent name="F:\laragon\www\newOa\public\mobile" />
-      <recent name="F:\laragon\www\newOa\public\css" />
-      <recent name="F:\laragon\www\newOa\app\Http\Controllers" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\laragon\www\newOa\resources\lang\zh-CN" />
       <recent name="F:\laragon\www\newOa\app\Http\Controllers\Api" />
       <recent name="F:\laragon\www\newOa\public" />
       <recent name="F:\laragon\www\newOa\app\Http\Model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\laragon\www\newOa\app\Admin\Controllers" />
+      <recent name="F:\laragon\www\newOa\app\Http\Model" />
+      <recent name="F:\laragon\www\newOa\public\img" />
+      <recent name="F:\laragon\www\newOa\public\mobile\css" />
+      <recent name="F:\laragon\www\newOa\public\mobile" />
     </key>
   </component>
   <component name="RunManager">
@@ -243,7 +262,15 @@
       <workItem from="1599006866861" duration="16119000" />
       <workItem from="1599096835324" duration="6623000" />
       <workItem from="1599207020939" duration="7602000" />
-      <workItem from="1599267166951" duration="20533000" />
+      <workItem from="1599267166951" duration="20569000" />
+      <workItem from="1599298702632" duration="26000" />
+      <workItem from="1599440647409" duration="21802000" />
+      <workItem from="1599528578556" duration="11256000" />
+      <workItem from="1599610805668" duration="7257000" />
+      <workItem from="1599697851064" duration="1805000" />
+      <workItem from="1599784824373" duration="2389000" />
+      <workItem from="1600051554307" duration="20912000" />
+      <workItem from="1600130506323" duration="7986000" />
     </task>
     <task id="LOCAL-00001" summary="new laravel-admin work">
       <created>1594521026638</created>
@@ -399,7 +426,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599291746054</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="修改我的订单列表">
+      <created>1599298670499</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1599298670499</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -431,6 +465,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="586" y="198" key="#Inspections/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598077339897" />
+    <state x="662" y="321" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599467120934">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="662" y="321" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599467120934" />
     <state x="765" y="295" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1597232385036">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -439,57 +477,57 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595209398961" />
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599288806910">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600073160003">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599288806910" />
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600073160003" />
     <state x="2610" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1599029266853" />
-    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1599291737491">
+    <state x="558" y="87" key="CommitChangelistDialog2" timestamp="1600150921003">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599291737491" />
+    <state x="558" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600150921003" />
     <state x="2478" y="87" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1599042437117" />
     <state x="558" y="87" key="CommitChangelistDialog2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594520878694" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1599289111440">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1600051558801">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599289111440" />
-    <state x="2660" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1599041568202" />
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600051558801" />
+    <state x="2660" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1599699458334" />
     <state x="740" y="275" key="FileChooserDialogImpl/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594428631501" />
     <state x="711" y="240" key="NewPhpClassDialog" timestamp="1597377521283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="711" y="240" key="NewPhpClassDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1597377521283" />
     <state x="2631" y="240" key="NewPhpClassDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1595596436910" />
-    <state x="776" y="443" key="NewPhpFileDialog" timestamp="1599284927541">
+    <state x="776" y="443" key="NewPhpFileDialog" timestamp="1600062125958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="776" y="443" key="NewPhpFileDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599284927541" />
+    <state x="776" y="443" key="NewPhpFileDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600062125958" />
     <state x="2696" y="443" key="NewPhpFileDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1598596256663" />
     <state x="776" y="443" key="NewPhpFileDialog/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594695767460" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1594782221491">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1594782221491" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1599291752974">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1599298717622">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599291752974" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599298717622" />
     <state x="2472" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1599042492566" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.77.1440.860/0.0.1920.1040@0.0.1920.1040" timestamp="1594522155846" />
-    <state x="2012" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1599041612749">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600075719703">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598858902715" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600075719703" />
     <state x="2012" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1599041612749" />
-    <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595240054724">
+    <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1600070434887">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1595240054724" />
-    <state x="662" y="252" width="1062" height="722" key="find.popup" timestamp="1599267696591">
+    <state x="543" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600070434887" />
+    <state x="662" y="252" width="1062" height="722" key="find.popup" timestamp="1600055063085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="662" y="252" width="1062" height="722" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599267696591" />
+    <state x="662" y="252" width="1062" height="722" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600055063085" />
     <state x="2582" y="252" width="616" height="536" key="find.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1595659442498" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1599289540560">
       <screen x="0" y="0" width="1920" height="1040" />
