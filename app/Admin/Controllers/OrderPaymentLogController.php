@@ -153,7 +153,7 @@ class OrderPaymentLogController extends AdminController
                 {
                     $orders['receipts'] = $params['old_receipts']+$params['receipts'];
                     $re = $orders_info->update($orders);
-                    $customer_contact_demand = (new CustomerContactDemand())->getByDemand($orders->customer_demand_id);
+                    $customer_contact_demand = (new CustomerContactDemand())->getByDemand($orders_info->customer_demand_id);
                     if ($customer_contact_demand)
                     {
                         $contact = (new CustomerContact())->getById($customer_contact_demand->customer_contact_id);
@@ -163,8 +163,8 @@ class OrderPaymentLogController extends AdminController
                             {
                                 // 确认收到款推送
                                 $order_info = [
-                                    'id' => $params['orders_id'],
-                                    'order_code' => $orders->order_code,
+                                    'id' => $orders_info->id,
+                                    'order_code' => $orders_info->order_code,
                                     'receipts' => $params['receipts'],// 本次收款金额
                                     'total' => $params['old_receipts']+$params['receipts'],// 累计支付金额
                                     'receivable' => $params['receivable'],// 应收金额
